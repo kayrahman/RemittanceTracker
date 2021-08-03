@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "597606238388",
+    "project_id": "remmitance-tracker",
+    "storage_bucket": "remmitance-tracker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:597606238388:android:d27b0e8e5194cd04682fe1",
+        "android_client_info": {
+          "package_name": "com.example.remittancetracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "597606238388-d4g7hk5tdjcp5ou5aaf5d9s4qoeam6dn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsKi_OTzpLuuP1ovlCqdIrCkj1a_upq-U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "597606238388-d4g7hk5tdjcp5ou5aaf5d9s4qoeam6dn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
