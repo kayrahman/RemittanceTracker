@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="spaceNormal">16dp</dimen>
+    <dimen name="space4dp">4dp</dimen>
+    <dimen name="spaceSmall">8dp</dimen>
+    <dimen name="text_size_large">24sp</dimen>
+    <dimen name="spaceLarge">24dp</dimen>
+</resources>
