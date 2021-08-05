@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.sendMoney.SendMoneyFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_top_bg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_top_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spaceNormal"
+                android:layout_marginBottom="@dimen/space4dp"
+                android:textColor="@color/colorTextDark"
+                android:textStyle="italic"
+                app:layout_constraintBottom_toTopOf="@+id/divider_top"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="@string/hc_date" />
+
+            <TextView
+                android:id="@+id/tv_day"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/spaceNormal"
+                android:textColor="@color/colorTextDark"
+                android:textStyle="italic"
+                app:layout_constraintBaseline_toBaselineOf="@+id/tv_date"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="@string/hc_day" />
+
+
+            <View
+                android:id="@+id/divider_top"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="@dimen/spaceNormal"
+                android:layout_marginTop="@dimen/space4dp"
+                android:layout_marginEnd="@dimen/spaceNormal"
+                android:layout_marginBottom="@dimen/space4dp"
+                android:background="@color/colorTextDark"
+                app:layout_constraintTop_toBottomOf="@+id/iv_top_bg" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_name"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/spaceNormal"
+                android:layout_marginTop="@dimen/spaceLarge"
+                android:layout_marginEnd="@dimen/spaceNormal"
+                android:hint="@string/label_name"
+                app:boxBackgroundColor="@color/colorTransparentHighlight"
+                app:boxStrokeColor="@color/colorGray"
+                app:hintTextColor="@color/colorGray"
+                app:layout_constraintBottom_toTopOf="@+id/til_amount"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider_top"
+                app:layout_constraintVertical_chainStyle="packed">
+
+                <EditText
+                    android:id="@+id/et_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/roboto_bold"
+                    android:inputType="none" />
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_amount"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/spaceNormal"
+                android:layout_marginTop="@dimen/spaceSmall"
+                android:layout_marginEnd="@dimen/spaceNormal"
+                android:hint="@string/label_amount"
+                app:boxBackgroundColor="@color/colorTransparentHighlight"
+                app:boxStrokeColor="@color/colorGray"
+                app:hintTextColor="@color/colorGray"
+                app:layout_constraintBottom_toTopOf="@+id/til_city"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til_name">
+
+                <EditText
+                    android:id="@+id/et_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/roboto_bold"
+                    android:inputType="none" />
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_city"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/spaceNormal"
+                android:layout_marginTop="@dimen/spaceSmall"
+                android:layout_marginEnd="@dimen/spaceNormal"
+                android:hint="@string/label_city"
+                app:boxBackgroundColor="@color/colorTransparentHighlight"
+                app:boxStrokeColor="@color/colorGray"
+                app:hintTextColor="@color/colorGray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til_amount">
+
+                <EditText
+                    android:id="@+id/et_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/roboto_bold"
+                    android:inputType="none" />
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <TextView
+                android:id="@+id/label_medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spaceNormal"
+                android:layout_marginTop="@dimen/spaceLarge"
+                android:layout_marginEnd="@dimen/spaceNormal"
+                android:text="@string/label_medium"
+                android:textSize="@dimen/text_size_large"
+                android:textStyle="italic"
+                app:layout_constraintTop_toBottomOf="@+id/til_city" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/tv_bank"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spaceNormal"
+                android:layout_marginTop="@dimen/spaceSmall"
+                android:layout_marginEnd="@dimen/space2dp"
+                android:drawableLeft="@drawable/ic_bank_icon"
+                android:padding="@dimen/spaceSmall"
+                android:text="@string/label_bank"
+                app:layout_constraintEnd_toStartOf="@+id/tv_bkash"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/label_medium" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/tv_bkash"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space2dp"
+                android:layout_marginTop="@dimen/spaceSmall"
+                android:layout_marginEnd="@dimen/spaceNormal"
+                android:backgroundTint="@color/colorError"
+                android:drawableLeft="@drawable/ic_bkash"
+                android:padding="@dimen/spaceSmall"
+                android:text="@string/label_bkash"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tv_bank"
+                app:layout_constraintTop_toBottomOf="@+id/label_medium" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cly_bank"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spaceLarge"
+                app:layout_constraintTop_toBottomOf="@+id/tv_bank">
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_acc_name"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="@dimen/spaceNormal"
+                    android:layout_marginTop="@dimen/spaceSmall"
+                    android:layout_marginEnd="@dimen/spaceNormal"
+                    android:hint="@string/hint_account_name"
+                    app:boxBackgroundColor="@color/colorTransparentHighlight"
+                    app:boxStrokeColor="@color/colorGray"
+                    app:hintTextColor="@color/colorGray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <EditText
+                        android:id="@+id/et_acc_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/roboto_bold"
+                        android:inputType="none" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_acc_number"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="@dimen/spaceNormal"
+                    android:layout_marginTop="@dimen/spaceSmall"
+                    android:layout_marginEnd="@dimen/spaceNormal"
+                    android:hint="@string/label_acc_number"
+                    app:boxBackgroundColor="@color/colorTransparentHighlight"
+                    app:boxStrokeColor="@color/colorGray"
+                    app:hintTextColor="@color/colorGray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/til_acc_name">
+
+                    <EditText
+                        android:id="@+id/et_acc_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/roboto_bold"
+                        android:inputType="none" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+</layout>

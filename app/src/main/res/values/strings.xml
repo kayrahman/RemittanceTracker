@@ -9,4 +9,14 @@
     <string name="string_send_money">Send Money</string>
     <string name="string_rcv_money">Receive Money</string>
     <string name="string_create_agent">Create Agent</string>
+    <string name="label_name">Name</string>
+    <string name="label_amount">Amount</string>
+    <string name="label_city">City</string>
+    <string name="label_medium">Medium</string>
+    <string name="label_bank">Bank</string>
+    <string name="label_bkash">BKash</string>
+    <string name="hint_account_name">Account Name</string>
+    <string name="label_acc_number">Account Number</string>
+    <string name="label_email">Email</string>
+    <string name="label_password">Password</string>
 </resources>

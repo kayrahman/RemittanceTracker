@@ -19,7 +19,7 @@
     <color name="colorTextDark">#080822</color>
 
     <color name="grey_font">#AFB1B3</color>
-    <color name="color_dark_yellow">#FE7247</color>
+    <color name="color_dark_yellow">#ECA235</color>
     <color name="colorTransparentBlack">#42000000</color>
     <color name="colorGray">#E5E5E5</color>
     <color name="colorTransparentPurple_700">#332020c2</color>
@@ -44,6 +44,20 @@
 
     <color name="red_200">#cf6679</color> <!--Color error (dark)-->
     <color name="red_600">#b00020</color> <!--Color error (light)-->
+
+
+    //#21324C
+    <color name="colorText">#21324C</color>
+    <color name="colorHint">#BEBEBE</color>
+    <color name="colorHighlight">#00A9FF</color>
+    <color name="colorTransparentHighlight">#F8FDFF</color>
+    <color name="colorLightHighlight">#D9F4FF</color>
+    <color name="colorDarkGray">#7A7A7A</color>
+    <color name="colorLightGray">#B9B9B9BF</color>
+    <color name="colorTextCategory">#424242</color>
+    <color name="colorError">#FF5500</color>
+    <color name="colorDuskYellow">#ffc922</color>
+
 
 
 </resources>
