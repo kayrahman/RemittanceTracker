@@ -6,23 +6,18 @@ const val KEY_MEME_URI = "KEY_MEME_URI"
 const val KEY_BYTE_IMAGE = "key_image_byte"
 const val TAG_OUTPUT = "OUTPUT"
 
-
-const val COLLECTION_MOVIES = "movies"
-const val NODE_MOVIE_TITLE = "movie_title"
-const val NODE_MOVIE_TAG = "tag"
-const val NODE_MOVIE_TYPE = "type"
-const val NODE_MOVIE_CREATOR = "creator"
-const val NODE_MOVIE_TYPE_NEW = "New"
-const val NODE_MOVIE_TYPE_SLIDE = "Slide"
-
-const val NODE_MOVIE_STATUS= "status"
-const val NODE_MOVIE_STATUS_PENDING = "pending"
-const val NODE_MOVIE_STATUS_CONFIRMED = "confirmed"
-
 const val COLLECTION_USERS = "users"
 
 const val USER_SUBSCRIPTION_TYPE_MONTHLY = "MONTHLY"
 const val USER_SUBSCRIPTION_TYPE_FREE = "FREE"
+
+const val TYPE_TOTAL_CASH_IN = "total_cash_in"
+const val TYPE_TOTAL_CASH_OUT = "total_cash_out"
+
+const val TYPE_TRANSACTION_SEND_MONEY = "send_money"
+const val TYPE_TRANSACTION_RECEIVE_MONEY = "receive money"
+
+
 
 
 const val USER_TYPE = "user_type"

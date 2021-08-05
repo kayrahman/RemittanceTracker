@@ -20,4 +20,6 @@
     <string name="label_email">Email</string>
     <string name="label_password">Password</string>
     <string name="label_date">Date</string>
+    <string name="label_total_cash_in">Total Cash In</string>
+    <string name="label_welcome">Welcome</string>
 </resources>

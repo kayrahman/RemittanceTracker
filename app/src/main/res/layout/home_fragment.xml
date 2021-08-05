@@ -21,6 +21,26 @@
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent" />
 
+
+
+      <TextView
+          android:id="@+id/tv_total_cash_title"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/label_welcome"
+          android:textColor="@color/colorWhite"
+          android:textSize="@dimen/text_size_large"
+          android:fontFamily="@font/roboto_bold"
+          android:textStyle="italic"
+          app:layout_constraintStart_toStartOf="@+id/iv_top_bg"
+          app:layout_constraintEnd_toEndOf="@+id/iv_top_bg"
+          app:layout_constraintTop_toTopOf="@+id/iv_top_bg"
+          app:layout_constraintBottom_toBottomOf="@+id/iv_top_bg"
+
+          />
+
+
+
       <TextView
           android:id="@+id/tv_date"
           android:layout_width="0dp"
@@ -195,14 +215,14 @@
           app:layout_constraintTop_toBottomOf="@+id/cv_total_cash_in"
           />
 
-      <TextView
-          android:id="@+id/tv_send_money"
+      <com.google.android.material.button.MaterialButton
+          android:id="@+id/btn_send_money"
           android:layout_width="match_parent"
-          android:layout_height="40dp"
+          android:layout_height="wrap_content"
           android:text="@string/string_send_money"
           android:textColor="@color/white_100"
           android:textAllCaps="true"
-          android:background="@drawable/bg_blue_full_rounded"
+          android:backgroundTint="@color/light_blue_600"
           app:layout_constraintTop_toBottomOf="@+id/label_fund_transfer"
           android:layout_marginStart="@dimen/spaceNormal"
           android:layout_marginEnd="@dimen/spaceNormal"
@@ -210,15 +230,15 @@
           android:gravity="center"
           />
 
-      <TextView
-          android:id="@+id/tv_rcv_money"
+      <com.google.android.material.button.MaterialButton
+          android:id="@+id/btn_rcv_money"
           android:layout_width="match_parent"
-          android:layout_height="40dp"
+          android:layout_height="wrap_content"
           android:text="@string/string_rcv_money"
           android:textColor="@color/white_100"
           android:textAllCaps="true"
-          android:background="@drawable/bg_golden_fill_rounded"
-          app:layout_constraintTop_toBottomOf="@+id/tv_send_money"
+          android:backgroundTint="@color/color_dark_yellow"
+          app:layout_constraintTop_toBottomOf="@+id/btn_send_money"
           android:layout_marginStart="@dimen/spaceNormal"
           android:layout_marginEnd="@dimen/spaceNormal"
           android:layout_marginTop="@dimen/space4dp"
@@ -231,21 +251,21 @@
           android:layout_width="match_parent"
           android:layout_height="1dp"
           android:background="@color/colorTextDark"
-          app:layout_constraintTop_toBottomOf="@+id/tv_rcv_money"
+          app:layout_constraintTop_toBottomOf="@+id/btn_rcv_money"
           android:layout_marginTop="@dimen/spaceLarge"
           android:layout_marginStart="@dimen/spaceLarge"
           android:layout_marginEnd="@dimen/spaceLarge"
           />
 
 
-      <TextView
-          android:id="@+id/tv_create_agent"
+      <com.google.android.material.button.MaterialButton
+          android:id="@+id/btn_create_agent"
           android:layout_width="wrap_content"
-          android:layout_height="40dp"
+          android:layout_height="wrap_content"
           android:text="@string/string_create_agent"
           android:textColor="@color/white_100"
           android:textAllCaps="true"
-          android:background="@drawable/bg_golden_fill_rounded"
+          android:backgroundTint="@color/color_dark_yellow"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintTop_toBottomOf="@+id/divider_bottom"

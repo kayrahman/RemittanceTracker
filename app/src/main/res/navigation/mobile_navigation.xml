@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/authenticationFragment">
+
+    <fragment
+        android:id="@+id/authenticationFragment"
+        android:name="com.example.remittancetracker.ui.authentication.AuthenticationFragment"
+        android:label="Authentication"
+        tools:layout="@layout/authentication_fragment" >
+        <action
+            android:id="@+id/action_authenticationFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.remittancetracker.ui.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/home_fragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_transactionFragment"
+            app:destination="@id/transactionFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_totalCashInNOutDetailFragment"
+            app:destination="@id/totalCashInNOutDetailFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/transactionFragment"
+        android:name="com.example.remittancetracker.ui.transaction.TransactionFragment"
+        android:label="Transaction"
+        tools:layout="@layout/transaction_fragment" >
+        <argument android:name="transactionType" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/totalCashInNOutDetailFragment"
+        android:name="com.example.remittancetracker.ui.TotalCashInNOutDetailFragment"
+        android:label="Transactions" >
+        <argument
+            android:name="transactionType"
+            app:argType="string" />
+    </fragment>
+</navigation>

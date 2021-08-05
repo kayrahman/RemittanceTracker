@@ -18,6 +18,23 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
+        <TextView
+            android:id="@+id/tv_total_cash_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="@string/label_total_cash_in"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_size_large"
+            android:fontFamily="@font/roboto_bold"
+            android:textStyle="italic"
+            app:layout_constraintStart_toStartOf="@+id/iv_top_bg"
+            app:layout_constraintEnd_toEndOf="@+id/iv_top_bg"
+            app:layout_constraintTop_toTopOf="@+id/iv_top_bg"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_top_bg"
+
+            />
+
         <TextView
             android:id="@+id/tv_date"
             android:layout_width="0dp"
