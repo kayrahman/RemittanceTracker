@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.remittancetracker.ui.HomeFragment"
+        android:name="com.example.remittancetracker.ui.home.HomeFragment"
         android:label="Home"
         tools:layout="@layout/home_fragment" >
         <action
@@ -26,6 +26,9 @@
         <action
             android:id="@+id/action_homeFragment_to_totalCashInNOutDetailFragment"
             app:destination="@id/totalCashInNOutDetailFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_createAgentFragment"
+            app:destination="@id/createAgentFragment" />
     </fragment>
 
 
@@ -40,10 +43,14 @@
 
     <fragment
         android:id="@+id/totalCashInNOutDetailFragment"
-        android:name="com.example.remittancetracker.ui.TotalCashInNOutDetailFragment"
+        android:name="com.example.remittancetracker.ui.transaction.TransactionDetailFragment"
         android:label="Transactions" >
         <argument
             android:name="transactionType"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/createAgentFragment"
+        android:name="com.example.remittancetracker.ui.createAgent.CreateAgentFragment"
+        android:label="CreateAgentFragment" />
 </navigation>

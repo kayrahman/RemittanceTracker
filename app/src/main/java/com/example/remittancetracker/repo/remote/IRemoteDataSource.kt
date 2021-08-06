@@ -19,23 +19,6 @@ interface IRemoteDataSource {
     suspend fun getUserInfo() : Result<FirebaseUserInfo>
     suspend fun updateUserType(user_type:Int) : Result<Unit>
 
-    //storage
-    suspend fun uploadUserThumbImage(uri: Uri) : Result<String>
-    suspend fun updateImageRef(img_ref : String) : Result<Unit>
-
-    //upload
-    suspend fun uploadVideoInfo(uri:Uri) : Result<MovieLocationInfo>
-    suspend fun uploadMovieThumbImage(uri:Uri) : Result<String>
-    suspend fun uploadMovieInfo(movie :FirebaseMovieInfo) : Result<Unit>
-
-    //movie
-    suspend fun fetchNewMovies():Result<List<Movie>>
-    suspend fun fetchSlideMovies():Result<List<Movie>>
-    suspend fun fetchOwnUploadedMovies():Result<List<Movie>>
-    suspend fun downloadMovieToLocalFile(movie : String) : Result<String>
-
-    //search
-    suspend fun fetchMoviesBySearch(queryString: String): Result<List<Movie>>
 
 }
 

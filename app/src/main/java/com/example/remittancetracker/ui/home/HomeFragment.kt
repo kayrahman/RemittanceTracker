@@ -1,12 +1,9 @@
-package com.example.remittancetracker.ui
+package com.example.remittancetracker.ui.home
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.remittancetracker.R
 import com.example.remittancetracker.databinding.HomeFragmentBinding
 import com.example.remittancetracker.base.BaseFragment
 import com.example.remittancetracker.base.BaseViewModel
@@ -59,9 +56,16 @@ class HomeFragment : BaseFragment() {
             navigateToTransactionScreen(TYPE_TRANSACTION_RECEIVE_MONEY)
         }
 
+        binding.btnCreateAgent.setOnClickListener {
+            navigateToCreateAgentScreen()
+        }
 
     }
 
+    private fun navigateToCreateAgentScreen() {
+        val actionCreateAgent = HomeFragmentDirections.actionHomeFragmentToCreateAgentFragment()
+        viewModel.navigationCommand.value = NavigationCommand.To(actionCreateAgent)
+    }
 
 
     fun navigateToTransactionScreen(transaction_type : String){

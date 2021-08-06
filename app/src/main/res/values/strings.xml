@@ -22,4 +22,7 @@
     <string name="label_date">Date</string>
     <string name="label_total_cash_in">Total Cash In</string>
     <string name="label_welcome">Welcome</string>
+    <string name="label_create_agent">Create Agent</string>
+    <string name="label_create">Create</string>
+    <string name="label_user_name">User Name</string>
 </resources>

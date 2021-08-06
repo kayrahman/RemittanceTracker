@@ -9,7 +9,10 @@ import com.example.remittancetracker.repo.local.LocalDataSourceImpl
 import com.example.remittancetracker.repo.local.MashProLocalDatabase
 import com.example.remittancetracker.repo.remote.IRemoteDataSource
 import com.example.remittancetracker.repo.remote.RemoteDataSourceImpl
-import com.example.remittancetracker.ui.HomeViewModel
+import com.example.remittancetracker.ui.authentication.AuthenticationViewModel
+import com.example.remittancetracker.ui.createAgent.CreateAgentViewModel
+import com.example.remittancetracker.ui.home.HomeViewModel
+import com.example.remittancetracker.ui.transaction.TransactionViewModel
 import com.example.remittancetracker.util.SharedPrefsHelper
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -37,7 +40,31 @@ class App : Application() {
             //Declare a ViewModel - be later inject into Fragment with dedicated injector using by viewModel()
 
             viewModel {
+                AuthenticationViewModel(
+                    this@App,
+                    get() as IRepoDataSource
+                )
+            }
+
+
+
+            viewModel {
                 HomeViewModel(
+                    this@App,
+                    get() as IRepoDataSource
+                )
+            }
+
+
+            viewModel {
+                CreateAgentViewModel(
+                    this@App,
+                    get() as IRepoDataSource
+                )
+            }
+
+            viewModel {
+                TransactionViewModel(
                     this@App,
                     get() as IRepoDataSource
                 )
