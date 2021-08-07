@@ -19,6 +19,9 @@ interface IRemoteDataSource {
     suspend fun getUserInfo() : Result<FirebaseUserInfo>
     suspend fun updateUserType(user_type:Int) : Result<Unit>
 
+    //----------------- TransactionInfo ------------------//
+    suspend fun uploadTransactionInfo(info : FirebaseTransactionInfo) : Result<Unit>
+
 
 }
 

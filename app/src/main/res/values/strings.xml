@@ -25,4 +25,10 @@
     <string name="label_create_agent">Create Agent</string>
     <string name="label_create">Create</string>
     <string name="label_user_name">User Name</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="label_send_money">Send MOney</string>
+    <string name="label_send">Send</string>
+    <string name="label_receive">Receive</string>
+    <string name="label_payment_method">Bank/Bkash</string>
 </resources>

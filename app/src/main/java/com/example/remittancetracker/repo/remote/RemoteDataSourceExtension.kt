@@ -2,7 +2,6 @@ package com.nkr.bazaranocustomer.repo.remote
 
 import android.util.Log
 import com.google.android.gms.tasks.Task
-import com.example.remittancetracker.model.FirebaseMovieInfo
 import com.example.remittancetracker.model.Movie
 import com.example.remittancetracker.repo.local.model.MovieDTO
 import timber.log.Timber
@@ -49,18 +48,6 @@ internal suspend fun <T> awaitTaskResultForVideoUri(task: Task<T>): T =
         }
     }
 
-
-val FirebaseMovieInfo.toMovie: Movie
-    get() = Movie(
-        uid = "",
-        video_url = this.video_url,
-        video_ref = this.video_ref,
-        img_url = this.img_url,
-        movie_title = this.movie_title,
-        movie_year = this.movie_year,
-        description = this.description,
-        type = this.type
-    )
 
 
 val Movie.toMovieDTO : MovieDTO

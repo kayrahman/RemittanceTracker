@@ -38,6 +38,9 @@
         android:label="Transaction"
         tools:layout="@layout/transaction_fragment" >
         <argument android:name="transactionType" />
+        <action
+            android:id="@+id/action_transactionFragment_to_confirmTransactionFragment"
+            app:destination="@id/confirmTransactionFragment" />
     </fragment>
 
 
@@ -53,4 +56,13 @@
         android:id="@+id/createAgentFragment"
         android:name="com.example.remittancetracker.ui.createAgent.CreateAgentFragment"
         android:label="CreateAgentFragment" />
+    <fragment
+        android:id="@+id/confirmTransactionFragment"
+        android:name="com.example.remittancetracker.ui.transaction.ConfirmTransactionFragment"
+        android:label="fragment_confirm_transaction"
+        tools:layout="@layout/fragment_confirm_transaction" >
+        <argument
+            android:name="paymentType"
+            app:argType="string" />
+    </fragment>
 </navigation>

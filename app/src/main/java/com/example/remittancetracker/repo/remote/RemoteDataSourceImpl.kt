@@ -4,14 +4,9 @@ import android.net.Uri
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
 import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import com.nkr.bazarano.service.MyFirebaseMessagingService
 import com.nkr.bazaranocustomer.repo.remote.awaitTaskCompletable
 import com.nkr.bazaranocustomer.repo.remote.awaitTaskResult
-import com.nkr.bazaranocustomer.repo.remote.awaitTaskResultForVideoUri
-import com.nkr.bazaranocustomer.repo.remote.toMovie
-import com.nkr.bazaranocustomer.util.StorageUtil
 import com.example.remittancetracker.model.*
 import timber.log.Timber
 import com.example.remittancetracker.repo.Result
@@ -202,6 +197,20 @@ class RemoteDataSourceImpl(
         }
     }
 
+    override suspend fun uploadTransactionInfo(info: FirebaseTransactionInfo): Result<Unit> {
+        val trns_info = info.copy(uid = getActiveUser()+info.timestamp,creator = getActiveUser())
+        return try {
+            awaitTaskCompletable(
+                remote.collection(COLLECTION_TRANSACTIONS)
+                    .document(trns_info.uid)
+                    .set(trns_info)
+            )
+            Result.Success(Unit)
+
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+    }
 
 
     suspend fun insertUserIntoRemote(user_uid: String): Result<FirebaseUserInfo> {
@@ -228,22 +237,5 @@ class RemoteDataSourceImpl(
         }
 
     }
-
-
-
-
-    private fun getMoviesFromTask(task: QuerySnapshot?): Result<List<Movie>> {
-        val movies = mutableListOf<Movie>()
-        task?.documents?.forEach {
-            val firebase_movie = it.toObject(FirebaseMovieInfo::class.java)
-            Timber.i("firebase_movie ${firebase_movie?.video_url.toString()}")
-            val movie = firebase_movie?.toMovie
-            movie?.uid = it.id
-            movies.add(movie!!)
-        }
-
-        return Result.Success(movies)
-    }
-
 
 }

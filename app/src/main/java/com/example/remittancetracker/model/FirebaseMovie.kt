@@ -4,17 +4,6 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 import kotlin.collections.ArrayList
 
-/*
-data class FirebaseMovie(
-    val video_url: String = "",
-    val video_ref:String = "",
-    val img_url: String = "",
-    val movie_title: String = "",
-    val movie_year: String = "",
-    val description: String = "",
-    val type : String =""
-
-)*/
 
 @Parcelize
 data class Movie(

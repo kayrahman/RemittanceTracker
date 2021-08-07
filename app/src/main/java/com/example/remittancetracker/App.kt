@@ -63,7 +63,7 @@ class App : Application() {
                 )
             }
 
-            viewModel {
+            single {
                 TransactionViewModel(
                     this@App,
                     get() as IRepoDataSource

@@ -13,4 +13,6 @@ interface IRepoDataSource {
     suspend fun updateUserInfoIntoRemote(user_info : UserInfo) : Result<Unit>
     suspend fun updateUserSubscriptionPlanToRemote(sub_plan : String) : Result<Unit>
 
+    //---------------  FirebaseTransactionInfo-------- //
+    suspend fun uploadTransactionInfoIntoRemote(info : FirebaseTransactionInfo): Result<Unit>
 }

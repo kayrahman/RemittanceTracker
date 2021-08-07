@@ -4,19 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.transaction.TransactionFragment">
 
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.example.remittancetracker.ui.transaction.TransactionViewModel" >
+        </variable>
+
+    </data>
+
+
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/iv_top_bg"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/defaultHeaderImageSize"
                 android:src="@drawable/ic_top_background"
+                android:scaleType="fitXY"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -80,7 +92,8 @@
                     android:id="@+id/et_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:fontFamily="@font/roboto_bold"
+                    android:fontFamily="@font/roboto"
+                    android:text="@={viewModel.accountName}"
                     android:inputType="none" />
 
 
@@ -109,8 +122,10 @@
                     android:id="@+id/et_amount"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:fontFamily="@font/roboto_bold"
-                    android:inputType="none" />
+                    android:fontFamily="@font/roboto"
+                    android:inputType="number"
+                    android:text="@={viewModel.amount}"
+                    />
 
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -137,8 +152,10 @@
                     android:id="@+id/et_city"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:fontFamily="@font/roboto_bold"
-                    android:inputType="none" />
+                    android:fontFamily="@font/roboto"
+                    android:inputType="none"
+                    android:text="@={viewModel.city}"
+                    />
 
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -158,7 +175,7 @@
 
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/tv_bank"
+                android:id="@+id/btn_bank"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spaceNormal"
@@ -167,14 +184,14 @@
                 android:drawableLeft="@drawable/ic_bank_icon"
                 android:padding="@dimen/spaceSmall"
                 android:text="@string/label_bank"
-                app:layout_constraintEnd_toStartOf="@+id/tv_bkash"
+                app:layout_constraintEnd_toStartOf="@+id/btn_bkash"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/label_medium" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/tv_bkash"
+                android:id="@+id/btn_bkash"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/space2dp"
@@ -186,74 +203,8 @@
                 android:text="@string/label_bkash"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/tv_bank"
+                app:layout_constraintStart_toEndOf="@+id/btn_bank"
                 app:layout_constraintTop_toBottomOf="@+id/label_medium" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cly_bank"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spaceLarge"
-                app:layout_constraintTop_toBottomOf="@+id/tv_bank">
-
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_acc_name"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="@dimen/spaceNormal"
-                    android:layout_marginTop="@dimen/spaceSmall"
-                    android:layout_marginEnd="@dimen/spaceNormal"
-                    android:hint="@string/hint_account_name"
-                    app:boxBackgroundColor="@color/colorTransparentHighlight"
-                    app:boxStrokeColor="@color/colorGray"
-                    app:hintTextColor="@color/colorGray"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintHorizontal_weight="1"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <EditText
-                        android:id="@+id/et_acc_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/roboto_bold"
-                        android:inputType="none" />
-
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_acc_number"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="@dimen/spaceNormal"
-                    android:layout_marginTop="@dimen/spaceSmall"
-                    android:layout_marginEnd="@dimen/spaceNormal"
-                    android:hint="@string/label_acc_number"
-                    app:boxBackgroundColor="@color/colorTransparentHighlight"
-                    app:boxStrokeColor="@color/colorGray"
-                    app:hintTextColor="@color/colorGray"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintHorizontal_weight="1"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/til_acc_name">
-
-                    <EditText
-                        android:id="@+id/et_acc_number"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/roboto_bold"
-                        android:inputType="none" />
-
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -35,6 +35,10 @@ class MashProRepository(
         return remote.updateUserSubscriptionPlan(sub_plan)
     }
 
+    override suspend fun uploadTransactionInfoIntoRemote(info: FirebaseTransactionInfo): Result<Unit> {
+        return remote.uploadTransactionInfo(info)
+    }
+
 
 }
 

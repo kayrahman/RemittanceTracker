@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import com.example.remittancetracker.R
 import com.example.remittancetracker.base.BaseFragment
 import com.example.remittancetracker.base.BaseViewModel
@@ -43,6 +44,16 @@ class AuthenticationFragment : BaseFragment() {
         binding.btnLogin.setOnClickListener {
             signinWithEmailNpass()
         }
+
+        viewModel.authenticationState.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                AuthenticationViewModel.AuthenticationState.AUTHENTICATED -> {
+                    navigateToHomeScreen()
+                }
+            }
+
+        })
+
 
     }
 

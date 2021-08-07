@@ -7,4 +7,5 @@
     <dimen name="text_size_large">24sp</dimen>
     <dimen name="text_size_Xlarge">28sp</dimen>
     <dimen name="spaceLarge">24dp</dimen>
+    <dimen name="defaultHeaderImageSize">180dp</dimen>
 </resources>
