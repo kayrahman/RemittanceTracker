@@ -1,6 +1,7 @@
 package com.example.remittancetracker.ui.transaction
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
@@ -12,7 +13,10 @@ import com.example.remittancetracker.repo.IRepoDataSource
 import com.example.remittancetracker.util.TYPE_TRANSACTION_SEND_MONEY
 import kotlinx.coroutines.launch
 import com.example.remittancetracker.repo.Result
+import com.example.remittancetracker.util.TYPE_TOTAL_CASH_IN
 import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.util.*
 
 class TransactionViewModel(val app : Application, val repo : IRepoDataSource) : BaseViewModel(app) {
 
@@ -21,15 +25,17 @@ class TransactionViewModel(val app : Application, val repo : IRepoDataSource) : 
     val amount = MutableLiveData<String>("")
     val city = MutableLiveData<String>("")
     val transactionType = MutableLiveData<String>("")
+    val transactionDetailType = MutableLiveData<String>("")
     val postType = MutableLiveData<String>("")
     val paymentMethodType = MutableLiveData<String>("")
 
+    val transactionList = MutableLiveData<List<FirebaseTransactionInfo>>()
+
+    val isUploadSuccessful = MutableLiveData<Boolean>(false)
 
     fun setPaymentMethodType(payment_type: String) {
         paymentMethodType.value = payment_type
     }
-
-
 
     fun setTransactionType(transaction_type: String) {
         if(transaction_type == TYPE_TRANSACTION_SEND_MONEY){
@@ -41,6 +47,26 @@ class TransactionViewModel(val app : Application, val repo : IRepoDataSource) : 
     }
 
 
+    fun getTransactions(type : String) = viewModelScope.launch {
+        val response = repo.getTransactionsInfoFromRemote(type)
+        when(response){
+            is Result.Success -> {
+                val transactions = response.data
+                if(transactions.isNotEmpty()){
+                    transactionList.value = transactions
+                }else{
+                    showNoData.value = true
+                }
+                Log.i("transaction_detail","transactions : ${transactions.size.toString()}")
+            }
+            is Result.Error -> {
+                showNoData.value = true
+                Log.i("transaction_detail","transactions : error ${response.exception.toString()}")
+            }
+        }
+    }
+
+
     fun postTransactionInfo() = viewModelScope.launch{
       showLoading.value = true
        val ti = validatedTransactionInfo()
@@ -49,10 +75,13 @@ class TransactionViewModel(val app : Application, val repo : IRepoDataSource) : 
             when(response){
                 is Result.Success -> {
                     Timber.i("post_transaction_staus : true")
+                    Log.i("post","status : true")
+                    isUploadSuccessful.value = true
                     showLoading.value = false
                 }
                 is Result.Error -> {
                     Timber.i("post_transaction_staus : error ${response.exception.toString()}")
+                    Log.i("post","status : false")
                     showLoading.value = false
                 }
             }
@@ -70,7 +99,7 @@ class TransactionViewModel(val app : Application, val repo : IRepoDataSource) : 
         if(acc_name.isNotEmpty() && amount.isNotEmpty() && acc_number.isNotEmpty()
             && payment_type.isNotEmpty() && transaction_type.isNotEmpty()){
             try{
-               val amount_num =  Integer.parseInt(acc_number)
+               val amount_num =  Integer.parseInt(amount)
                 return if(amount_num!= 0){
                     FirebaseTransactionInfo(
                         account_name = acc_name,
@@ -86,11 +115,21 @@ class TransactionViewModel(val app : Application, val repo : IRepoDataSource) : 
                 }
 
             }catch (e:Exception){
+                showSnackBar.value = "Something went wrong"
                 return null
             }
         }else{
             showSnackBar.value = "Fields empty"
             return null
+        }
+    }
+
+
+    fun setTransactionDetailType(type : String){
+        if(type == TYPE_TOTAL_CASH_IN) {
+            transactionDetailType.value = "Total Cash In"
+        }else{
+            transactionDetailType.value = "Total Cash Out"
         }
     }
 

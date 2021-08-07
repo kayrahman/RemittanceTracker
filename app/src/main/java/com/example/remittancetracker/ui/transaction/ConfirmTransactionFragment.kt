@@ -5,11 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.example.remittancetracker.R
 import com.example.remittancetracker.base.BaseFragment
 import com.example.remittancetracker.base.BaseViewModel
 import com.example.remittancetracker.databinding.FragmentConfirmTransactionBinding
+import com.nkr.bazaranocustomer.base.NavigationCommand
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -46,10 +48,12 @@ class ConfirmTransactionFragment : BaseFragment() {
         binding.btnTransaction.setOnClickListener {
             viewModel.postTransactionInfo()
         }
+
+
+        viewModel.isUploadSuccessful.observe(viewLifecycleOwner, Observer {
+            if(it){
+                viewModel.navigationCommand.value = NavigationCommand.BackTo(R.id.homeFragment)
+            }
+        })
     }
-
-
-
-
-
 }

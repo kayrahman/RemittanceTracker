@@ -27,8 +27,8 @@ class MashProRepository(
         return remote.updateUserType(type)
     }
 
-    override suspend fun updateUserInfoIntoRemote(user_info: UserInfo): Result<Unit> {
-        return remote.updateUserInfo(user_info)
+    override suspend fun updateAgentInfoIntoRemote(agent_info: FirebaseNewAgent): Result<Unit> {
+        return remote.updateAgentInfo(agent_info)
     }
 
     override suspend fun updateUserSubscriptionPlanToRemote(sub_plan: String): Result<Unit> {
@@ -37,6 +37,10 @@ class MashProRepository(
 
     override suspend fun uploadTransactionInfoIntoRemote(info: FirebaseTransactionInfo): Result<Unit> {
         return remote.uploadTransactionInfo(info)
+    }
+
+    override suspend fun getTransactionsInfoFromRemote(trns_type : String): Result<List<FirebaseTransactionInfo>> {
+        return remote.getTransactions(trns_type)
     }
 
 

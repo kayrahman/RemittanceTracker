@@ -118,20 +118,12 @@ class RemoteDataSourceImpl(
 
     }
 
-    override suspend fun updateUserInfo(user_info: UserInfo): Result<Unit> {
-        val map = HashMap<String, Any>()
-        if (user_info.user_name.isNotEmpty()) {
-            map["user_name"] = user_info.user_name
-        }
-        if (user_info.phone_number.isNotEmpty()) {
-            map["phone_number"] = user_info.phone_number
-        }
-
+    override suspend fun updateAgentInfo(agent_info: FirebaseNewAgent): Result<Unit> {
         return try {
             awaitTaskCompletable(
                 remote.collection(COLLECTION_USERS)
-                    .document(getActiveUser())
-                    .update(map)
+                    .document(agent_info.uid)
+                    .set(agent_info)
             )
             Result.Success(Unit)
 
@@ -210,6 +202,47 @@ class RemoteDataSourceImpl(
         } catch (e: Exception) {
             Result.Error(e)
         }
+    }
+
+    override suspend fun getTransactions(type : String): Result<List<FirebaseTransactionInfo>> {
+        if (type == TYPE_TOTAL_CASH_OUT) {
+            return try {
+                val task = awaitTaskResult(
+                    remote.collection(COLLECTION_TRANSACTIONS)
+                        .whereEqualTo("transaction_type", TYPE_TRANSACTION_SEND_MONEY)
+                        .get()
+                )
+
+                getTransactionsFromTask(task)
+
+            } catch (e: Exception) {
+                Result.Error(e)
+            }
+        }else{
+            return try {
+                val task = awaitTaskResult(
+                    remote.collection(COLLECTION_TRANSACTIONS)
+                        .whereEqualTo("transaction_type", TYPE_TRANSACTION_RECEIVE_MONEY)
+                        .get()
+                )
+
+                getTransactionsFromTask(task)
+
+            } catch (e: Exception) {
+                Result.Error(e)
+            }
+        }
+    }
+
+    private fun getTransactionsFromTask(task: QuerySnapshot?): Result<List<FirebaseTransactionInfo>> {
+        val movies = mutableListOf<FirebaseTransactionInfo>()
+            task?.documents?.forEach {
+                val transactionInfo = it.toObject(FirebaseTransactionInfo::class.java)
+                movies.add(transactionInfo!!)
+            }
+
+            return Result.Success(movies)
+
     }
 
 

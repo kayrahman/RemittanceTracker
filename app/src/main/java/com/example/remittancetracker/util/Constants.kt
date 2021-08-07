@@ -19,8 +19,5 @@ const val TYPE_TRANSACTION_SEND_MONEY = "send_money"
 const val TYPE_TRANSACTION_RECEIVE_MONEY = "receive money"
 
 
-
-
-const val USER_TYPE = "user_type"
-const val USER_TYPE_VIEWER = 801
-const val USER_TYPE_CREATOR = 802
+const val USER_TYPE_ADMIN = "ADMIN"
+const val USER_TYPE_AGENT = "AGENT"

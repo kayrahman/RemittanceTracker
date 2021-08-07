@@ -68,7 +68,7 @@ class AuthenticationFragment : BaseFragment() {
                     viewModel.showLoading.value = false
                     if (task.isSuccessful) {
                         val user = auth.currentUser
-                        navigateToHomeScreen()
+                       // navigateToHomeScreen()
 
                     } else {
                         // If sign in fails, display a message to the user.

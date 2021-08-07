@@ -4,6 +4,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.home.HomeFragment">
 
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.example.remittancetracker.ui.transaction.TransactionViewModel" >
+        </variable>
+
+    </data>
+
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,6 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_top_background"
+            android:scaleType="fitXY"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -23,6 +34,7 @@
             android:id="@+id/tv_total_cash_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{viewModel.transactionDetailType}"
             tools:text="@string/label_total_cash_in"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/text_size_large"
@@ -80,6 +92,21 @@
             app:layout_constraintTop_toBottomOf="@+id/divider_two"
             tools:listitem="@layout/list_item_transaction_detail" />
 
+        <TextView
+            android:id="@+id/label_no_data"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/label_no_data"
+            android:textColor="@color/light_blue_A200"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:textAlignment="center"
+            android:visibility="@{viewModel.showNoData?View.VISIBLE:View.GONE}"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
 
 
         <TextView
@@ -120,7 +147,7 @@
             android:textColor="@color/light_blue_A200"
             android:fontFamily="@font/roboto_condensed_bold"
             android:textStyle="italic"
-            android:layout_marginEnd="@dimen/spaceNormal"
+            android:layout_marginEnd="@dimen/spaceLarge"
             android:textAlignment="textEnd"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/label_account_number"
