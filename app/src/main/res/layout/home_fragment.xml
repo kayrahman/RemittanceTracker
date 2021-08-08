@@ -4,6 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.home.HomeFragment">
 
+   <data>
+      <import type="android.view.View"/>
+      <variable
+          name="viewModel"
+          type="com.example.remittancetracker.ui.home.HomeViewModel" >
+      </variable>
+
+   </data>
+
    <ScrollView
        android:layout_width="match_parent"
        android:layout_height="wrap_content">
@@ -276,6 +285,7 @@
           android:paddingStart="@dimen/spaceLarge"
           android:paddingEnd="@dimen/spaceLarge"
           android:gravity="center"
+          android:visibility="@{viewModel.isUserTypeAdmin}"
 
           />
 

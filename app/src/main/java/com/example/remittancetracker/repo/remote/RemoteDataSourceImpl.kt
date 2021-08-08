@@ -27,6 +27,8 @@ class RemoteDataSourceImpl(
         return auth.currentUser?.uid.toString()
     }
 
+    /*
+
     override suspend fun getRegistrationToken(): Result<ArrayList<String>> {
         return try {
             val task = awaitTaskResult(
@@ -68,57 +70,12 @@ class RemoteDataSourceImpl(
         }
     }
 
+    */
+
+
     //----------------USER AUTHENTICATION ACTIVITY--------------/
-    override suspend fun setupUserInRemote(): Result<Unit> {
 
-        Timber.i("user_first_time:settting up user")
-        val user_uid = getActiveUser()
-        return try {
-            val task = awaitTaskResult(
-                remote.collection(COLLECTION_USERS).document(user_uid).get()
-            )
-            if (task.exists()) {
-                val user = task.toObject(FirebaseUserInfo::class.java)
-                // fetch the user data and insert into local db
-                Timber.i("user_first_time:false")
-                if (user != null) {
-                    FirebaseMessaging.getInstance().token.addOnSuccessListener {
-                        MyFirebaseMessagingService.addTokenToFirestore(it)
-                    }
-
-                    Result.Success(Unit)
-                } else {
-                    Timber.i("user_first_time:not found")
-                    throw Exception("firebase user not found")
-                }
-            } else {
-                Timber.i("user_first_time:true")
-                val user = insertUserIntoRemote(user_uid)
-                when (user) {
-                    is Result.Success -> {
-                        //update registrationTokens
-                        FirebaseMessaging.getInstance().token.addOnSuccessListener {
-                            MyFirebaseMessagingService.addTokenToFirestore(it)
-                        }
-
-                        Result.Success(Unit)
-                    }
-                    is Result.Error -> {
-                        throw user.exception
-                    }
-                }
-
-                //fetch the latest 30 products and categories from remote, save into local db
-
-            }
-        } catch (e: Exception) {
-            // false
-            throw e
-        }
-
-    }
-
-    override suspend fun updateAgentInfo(agent_info: FirebaseNewAgent): Result<Unit> {
+    override suspend fun updateAgentInfo(agent_info: FirebaseUserInfo): Result<Unit> {
         return try {
             awaitTaskCompletable(
                 remote.collection(COLLECTION_USERS)
@@ -234,6 +191,38 @@ class RemoteDataSourceImpl(
         }
     }
 
+    override suspend fun getAgentTransactions(type: String): Result<List<FirebaseTransactionInfo>> {
+        if (type == TYPE_TOTAL_CASH_OUT) {
+            return try {
+                val task = awaitTaskResult(
+                    remote.collection(COLLECTION_TRANSACTIONS)
+                        .whereEqualTo("creator",getActiveUser())
+                        .whereEqualTo("transaction_type", TYPE_TRANSACTION_SEND_MONEY)
+                        .get()
+                )
+
+                getTransactionsFromTask(task)
+
+            } catch (e: Exception) {
+                Result.Error(e)
+            }
+        }else{
+            return try {
+                val task = awaitTaskResult(
+                    remote.collection(COLLECTION_TRANSACTIONS)
+                        .whereEqualTo("creator",getActiveUser())
+                        .whereEqualTo("transaction_type", TYPE_TRANSACTION_RECEIVE_MONEY)
+                        .get()
+                )
+
+                getTransactionsFromTask(task)
+
+            } catch (e: Exception) {
+                Result.Error(e)
+            }
+        }
+    }
+
     private fun getTransactionsFromTask(task: QuerySnapshot?): Result<List<FirebaseTransactionInfo>> {
         val movies = mutableListOf<FirebaseTransactionInfo>()
             task?.documents?.forEach {
@@ -242,32 +231,6 @@ class RemoteDataSourceImpl(
             }
 
             return Result.Success(movies)
-
-    }
-
-
-    suspend fun insertUserIntoRemote(user_uid: String): Result<FirebaseUserInfo> {
-        val firebaseUser = auth.currentUser
-        return try {
-            val user = FirebaseUserInfo(
-                firebaseUser?.uid.toString(),
-                firebaseUser?.displayName.toString(),
-                email = firebaseUser?.email.toString(),
-                img_url = firebaseUser?.photoUrl.toString()
-            )
-            awaitTaskCompletable(
-                remote.collection(COLLECTION_USERS)
-                    .document(user_uid)
-                    .set(
-                        user
-                    )
-            )
-
-            Result.Success(user)
-
-        } catch (e: Exception) {
-            throw e
-        }
 
     }
 

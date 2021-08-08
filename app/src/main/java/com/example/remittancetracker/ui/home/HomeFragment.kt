@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.navArgs
 import com.example.remittancetracker.databinding.HomeFragmentBinding
 import com.example.remittancetracker.base.BaseFragment
 import com.example.remittancetracker.base.BaseViewModel
+import com.example.remittancetracker.model.FirebaseUserInfo
 import com.example.remittancetracker.util.TYPE_TOTAL_CASH_IN
 import com.example.remittancetracker.util.TYPE_TOTAL_CASH_OUT
 import com.example.remittancetracker.util.TYPE_TRANSACTION_RECEIVE_MONEY
@@ -22,6 +24,15 @@ class HomeFragment : BaseFragment() {
         get() = viewModel
 
     private lateinit var binding : HomeFragmentBinding
+    private val safeArgs : HomeFragmentArgs by navArgs()
+
+    private lateinit var userInfo : FirebaseUserInfo
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        userInfo = safeArgs.userInfo
+        viewModel.setUserInfo(userInfo)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +44,7 @@ class HomeFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
         setupListener()
@@ -41,10 +53,10 @@ class HomeFragment : BaseFragment() {
 
     private fun setupListener() {
         binding.cvTotalCashIn.setOnClickListener {
-            navigateToTransactionDetail(TYPE_TOTAL_CASH_IN)
+            navigateToTransactionDetail(TYPE_TOTAL_CASH_IN,userInfo.user_type)
         }
         binding.cvTotalCashOut.setOnClickListener {
-            navigateToTransactionDetail(TYPE_TOTAL_CASH_OUT)
+            navigateToTransactionDetail(TYPE_TOTAL_CASH_OUT,userInfo.user_type)
         }
 
 
@@ -73,8 +85,8 @@ class HomeFragment : BaseFragment() {
         viewModel.navigationCommand.value = NavigationCommand.To(actionTransDetail)
     }
 
-    fun navigateToTransactionDetail(transaction_detail_type : String){
-        val actionTransDetail = HomeFragmentDirections.actionHomeFragmentToTotalCashInNOutDetailFragment(transaction_detail_type)
+    fun navigateToTransactionDetail(transaction_detail_type : String,user_type : String){
+        val actionTransDetail = HomeFragmentDirections.actionHomeFragmentToTotalCashInNOutDetailFragment(transaction_detail_type, user_type)
         viewModel.navigationCommand.value = NavigationCommand.To(actionTransDetail)
     }
 

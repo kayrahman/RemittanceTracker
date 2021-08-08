@@ -14,6 +14,7 @@ import com.example.remittancetracker.util.TYPE_TRANSACTION_SEND_MONEY
 import kotlinx.coroutines.launch
 import com.example.remittancetracker.repo.Result
 import com.example.remittancetracker.util.TYPE_TOTAL_CASH_IN
+import com.example.remittancetracker.util.USER_TYPE_ADMIN
 import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
@@ -47,8 +48,14 @@ class TransactionViewModel(val app : Application, val repo : IRepoDataSource) : 
     }
 
 
-    fun getTransactions(type : String) = viewModelScope.launch {
-        val response = repo.getTransactionsInfoFromRemote(type)
+    fun getTransactions(user_type : String,transaction_type: String) = viewModelScope.launch {
+        val response = if(user_type == USER_TYPE_ADMIN) {
+            repo.getTransactionsInfoFromRemote(transaction_type)
+        }else{
+            repo.getAgentTransactionsInfoFromRemote(transaction_type)
+        }
+
+
         when(response){
             is Result.Success -> {
                 val transactions = response.data

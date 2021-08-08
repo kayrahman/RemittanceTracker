@@ -41,6 +41,10 @@ class AuthenticationFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
+
+
         binding.btnLogin.setOnClickListener {
             signinWithEmailNpass()
         }
@@ -48,7 +52,7 @@ class AuthenticationFragment : BaseFragment() {
         viewModel.authenticationState.observe(viewLifecycleOwner, Observer {
             when (it) {
                 AuthenticationViewModel.AuthenticationState.AUTHENTICATED -> {
-                    navigateToHomeScreen()
+                    viewModel.getUserInfo()
                 }
             }
 
@@ -82,10 +86,6 @@ class AuthenticationFragment : BaseFragment() {
     }
 
 
-    fun navigateToHomeScreen() {
-        val actionHome =
-            AuthenticationFragmentDirections.actionAuthenticationFragmentToHomeFragment()
-        viewModel.navigationCommand.value = NavigationCommand.To(actionHome)
-    }
+
 
 }

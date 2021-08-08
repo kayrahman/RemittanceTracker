@@ -1,8 +1,10 @@
 package com.example.remittancetracker.model
 
+import android.os.Parcelable
 import android.util.Log
 import com.example.remittancetracker.util.USER_TYPE_AGENT
 import com.nkr.bazarano.util.Helperutils.Companion.formattedDate
+import kotlinx.android.parcel.Parcelize
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -29,10 +31,10 @@ data class FirebaseTransactionInfo(
 
 }
 
-
-data class FirebaseNewAgent(
+@Parcelize
+data class FirebaseUserInfo(
     val uid : String="",
     val username : String="",
     val email : String="",
-    val user_type : String = USER_TYPE_AGENT
-)
+    val user_type : String = ""
+) : Parcelable

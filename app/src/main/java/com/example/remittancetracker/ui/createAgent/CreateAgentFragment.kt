@@ -11,8 +11,9 @@ import com.example.remittancetracker.R
 import com.example.remittancetracker.base.BaseFragment
 import com.example.remittancetracker.base.BaseViewModel
 import com.example.remittancetracker.databinding.CreateAgentFragmentBinding
-import com.example.remittancetracker.model.FirebaseNewAgent
+import com.example.remittancetracker.model.FirebaseUserInfo
 import com.example.remittancetracker.ui.authentication.AuthenticationViewModel
+import com.example.remittancetracker.util.USER_TYPE_AGENT
 import com.google.firebase.auth.FirebaseAuth
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -40,6 +41,8 @@ class CreateAgentFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
 
         binding.btnCreateAgent.setOnClickListener {
             createUser()
@@ -70,7 +73,7 @@ class CreateAgentFragment : BaseFragment() {
                 viewModel.showLoading.value = false
                 if (task.isSuccessful) {
                     val uid = task.result?.user?.uid
-                    val user = FirebaseNewAgent(uid = uid.toString(),username= username, email = email)
+                    val user = FirebaseUserInfo(uid = uid.toString(),username= username, email = email,user_type = USER_TYPE_AGENT)
                     viewModel.updateUserInfo(user)
 
                 } else {
