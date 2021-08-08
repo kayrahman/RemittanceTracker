@@ -4,9 +4,6 @@ import android.app.Application
 import androidx.databinding.library.BuildConfig
 import com.example.remittancetracker.repo.IRepoDataSource
 import com.example.remittancetracker.repo.MashProRepository
-import com.example.remittancetracker.repo.local.ILocalDataSource
-import com.example.remittancetracker.repo.local.LocalDataSourceImpl
-import com.example.remittancetracker.repo.local.MashProLocalDatabase
 import com.example.remittancetracker.repo.remote.IRemoteDataSource
 import com.example.remittancetracker.repo.remote.RemoteDataSourceImpl
 import com.example.remittancetracker.ui.authentication.AuthenticationViewModel
@@ -73,11 +70,9 @@ class App : Application() {
 
             //  single { MyFirebaseMessagingService(get() as IRepoDataSource) }
            // single { SharedPrefsHelper(this@App) }
-            single { MashProRepository(get() as IRemoteDataSource,get() as ILocalDataSource) as IRepoDataSource }
+            single { MashProRepository(get() as IRemoteDataSource) as IRepoDataSource }
             single { RemoteDataSourceImpl() as IRemoteDataSource }
-            single { LocalDataSourceImpl(get()) as ILocalDataSource }
-            single { MashProLocalDatabase.getInstance(this@App).movieDao }
-            // single { MashProRepository(get())}
+
         }
 
         startKoin {

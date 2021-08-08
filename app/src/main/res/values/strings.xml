@@ -2,7 +2,7 @@
     <string name="app_name">RemittanceTracker</string>
     <string name="string_total_cash_in">Total Cash In : </string>
     <string name="string_total_cash_out">Total Cash Out</string>
-    <string name="string_hc_total_cash">Tk 2690</string>
+    <string name="string_hc_total_cash">Tk 2500000</string>
     <string name="hc_date">Date : 04/07/21</string>
     <string name="hc_day">Wednesday</string>
     <string name="label_fund_transfer">Fund Transfer</string>

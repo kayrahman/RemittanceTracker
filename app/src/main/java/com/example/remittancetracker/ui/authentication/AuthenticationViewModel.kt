@@ -31,7 +31,7 @@ class AuthenticationViewModel(app: Application, val repo: IRepoDataSource) : Bas
             }
             is Result.Error -> {
                 showLoading.value = false
-                showSnackBar.value = "Something went wrong"
+               // showSnackBar.value = "Something went wrong"
             }
         }
     }

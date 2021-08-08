@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 import com.example.remittancetracker.repo.Result
 import com.example.remittancetracker.util.TYPE_TOTAL_CASH_IN
 import com.example.remittancetracker.util.USER_TYPE_ADMIN
+import com.nkr.bazaranocustomer.util.SingleLiveEvent
 import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
@@ -32,7 +33,7 @@ class TransactionViewModel(val app : Application, val repo : IRepoDataSource) : 
 
     val transactionList = MutableLiveData<List<FirebaseTransactionInfo>>()
 
-    val isUploadSuccessful = MutableLiveData<Boolean>(false)
+    val isUploadSuccessful = SingleLiveEvent<Boolean>()
 
     fun setPaymentMethodType(payment_type: String) {
         paymentMethodType.value = payment_type
@@ -74,17 +75,30 @@ class TransactionViewModel(val app : Application, val repo : IRepoDataSource) : 
     }
 
 
-    fun postTransactionInfo() = viewModelScope.launch{
-      showLoading.value = true
+    fun postTransactionInfo(user_type: String) = viewModelScope.launch{
+
        val ti = validatedTransactionInfo()
         ti?.let {
-            val response = repo.uploadTransactionInfoIntoRemote(it)
+            showLoading.value = true
+            val response = repo.uploadTransactionInfoIntoRemote(it,user_type)
             when(response){
                 is Result.Success -> {
                     Timber.i("post_transaction_staus : true")
                     Log.i("post","status : true")
-                    isUploadSuccessful.value = true
-                    showLoading.value = false
+
+                    val total_response = repo.updateTransactionTotalInto(it.amount,user_type,it.transaction_type)
+                    when(total_response){
+                        is Result.Success -> {
+                            isUploadSuccessful.value = true
+                            showLoading.value = false
+                        }
+                        is Result.Error -> {
+                            showLoading.value = false
+                            Timber.i("post_transaction_staus : error ${total_response.exception.toString()}")
+                        }
+                    }
+
+
                 }
                 is Result.Error -> {
                     Timber.i("post_transaction_staus : error ${response.exception.toString()}")

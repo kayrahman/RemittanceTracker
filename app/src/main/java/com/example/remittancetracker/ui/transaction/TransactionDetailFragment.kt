@@ -52,12 +52,12 @@ class TransactionDetailFragment : BaseFragment() {
         when (trns_detail_type) {
             TYPE_TOTAL_CASH_IN -> {
                 if(user_type == USER_TYPE_ADMIN) {
-                    viewModel.getTransactions(TYPE_TOTAL_CASH_IN)
+                    viewModel.getTransactions(TYPE_TOTAL_CASH_IN,USER_TYPE_ADMIN)
                 }
             }
             TYPE_TOTAL_CASH_OUT -> {
                 if(user_type == USER_TYPE_AGENT) {
-                    viewModel.getTransactions(TYPE_TOTAL_CASH_OUT)
+                    viewModel.getTransactions(TYPE_TOTAL_CASH_OUT, USER_TYPE_AGENT)
                 }
             }
             else -> {

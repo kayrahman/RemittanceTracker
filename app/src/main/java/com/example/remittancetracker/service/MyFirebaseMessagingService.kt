@@ -40,7 +40,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         Timber.i( "sendRegistrationTokenToServer($token)")
         //update user with token on firestore
         if (FirebaseAuth.getInstance().currentUser != null) {
-            addTokenToFirestore(token!!)
+          //  addTokenToFirestore(token!!)
         }
 
     }
@@ -71,7 +71,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         notificationManager.sendNotification("New Order Received",applicationContext)
     }
 */
-
+/*
     companion object {
         private const val TAG = "MyFirebaseMsgService"
         fun addTokenToFirestore(token: String) {
@@ -108,5 +108,5 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             }
 
         }
-    }
+    }*/
 }

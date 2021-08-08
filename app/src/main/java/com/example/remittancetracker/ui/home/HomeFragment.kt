@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
+import com.example.remittancetracker.R
 import com.example.remittancetracker.databinding.HomeFragmentBinding
 import com.example.remittancetracker.base.BaseFragment
 import com.example.remittancetracker.base.BaseViewModel
@@ -13,6 +14,8 @@ import com.example.remittancetracker.util.TYPE_TOTAL_CASH_IN
 import com.example.remittancetracker.util.TYPE_TOTAL_CASH_OUT
 import com.example.remittancetracker.util.TYPE_TRANSACTION_RECEIVE_MONEY
 import com.example.remittancetracker.util.TYPE_TRANSACTION_SEND_MONEY
+import com.firebase.ui.auth.AuthUI
+import com.google.firebase.auth.FirebaseAuth
 import com.nkr.bazaranocustomer.base.NavigationCommand
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -47,6 +50,8 @@ class HomeFragment : BaseFragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
+        viewModel.getTransactionsTotal()
+
         setupListener()
 
     }
@@ -72,6 +77,15 @@ class HomeFragment : BaseFragment() {
             navigateToCreateAgentScreen()
         }
 
+
+        binding.ibLogout.setOnClickListener {
+            AuthUI.getInstance().signOut(requireContext())
+                .addOnCompleteListener {
+                    //go to login screen
+                    viewModel.navigationCommand.value = NavigationCommand.BackTo(R.id.authenticationFragment)
+                }
+        }
+
     }
 
     private fun navigateToCreateAgentScreen() {
@@ -81,7 +95,7 @@ class HomeFragment : BaseFragment() {
 
 
     fun navigateToTransactionScreen(transaction_type : String){
-        val actionTransDetail = HomeFragmentDirections.actionHomeFragmentToTransactionFragment(transaction_type)
+        val actionTransDetail = HomeFragmentDirections.actionHomeFragmentToTransactionFragment(transaction_type,userInfo.user_type)
         viewModel.navigationCommand.value = NavigationCommand.To(actionTransDetail)
     }
 

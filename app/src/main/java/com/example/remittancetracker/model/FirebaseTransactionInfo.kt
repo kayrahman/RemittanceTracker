@@ -33,8 +33,14 @@ data class FirebaseTransactionInfo(
 
 @Parcelize
 data class FirebaseUserInfo(
-    val uid : String="",
-    val username : String="",
-    val email : String="",
-    val user_type : String = ""
+    val uid: String = "",
+    val username: String = "",
+    val email: String = "",
+    val user_type: String = ""
 ) : Parcelable
+
+
+data class TransactionTotal(
+    val total_sent_money: Int,
+    val total_received_money: Int
+)

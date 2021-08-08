@@ -21,14 +21,16 @@ class ConfirmTransactionFragment : BaseFragment() {
     override val _viewModel: BaseViewModel
         get() = viewModel
 
-
     private lateinit var binding : FragmentConfirmTransactionBinding
     private val safeArgs : ConfirmTransactionFragmentArgs by navArgs()
+
+    private var userType = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val payment_method = safeArgs.paymentType
+        userType = safeArgs.userType
         viewModel.setPaymentMethodType(payment_method)
     }
 
@@ -46,7 +48,7 @@ class ConfirmTransactionFragment : BaseFragment() {
         binding.lifecycleOwner = this
 
         binding.btnTransaction.setOnClickListener {
-            viewModel.postTransactionInfo()
+            viewModel.postTransactionInfo(userType)
         }
 
 

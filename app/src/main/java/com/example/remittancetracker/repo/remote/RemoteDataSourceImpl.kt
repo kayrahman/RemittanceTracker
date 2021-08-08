@@ -1,20 +1,14 @@
 package com.example.remittancetracker.repo.remote
 
-import android.net.Uri
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
-import com.google.firebase.messaging.FirebaseMessaging
-import com.nkr.bazarano.service.MyFirebaseMessagingService
 import com.nkr.bazaranocustomer.repo.remote.awaitTaskCompletable
 import com.nkr.bazaranocustomer.repo.remote.awaitTaskResult
 import com.example.remittancetracker.model.*
-import timber.log.Timber
 import com.example.remittancetracker.repo.Result
 import com.example.remittancetracker.util.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.io.File
-import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 
@@ -146,14 +140,20 @@ class RemoteDataSourceImpl(
         }
     }
 
-    override suspend fun uploadTransactionInfo(info: FirebaseTransactionInfo): Result<Unit> {
-        val trns_info = info.copy(uid = getActiveUser()+info.timestamp,creator = getActiveUser())
+    override suspend fun uploadTransactionInfo(
+        info: FirebaseTransactionInfo,
+        user_type: String
+    ): Result<Unit> {
+        val trns_info = info.copy(uid = getActiveUser() + info.timestamp, creator = getActiveUser())
         return try {
             awaitTaskCompletable(
                 remote.collection(COLLECTION_TRANSACTIONS)
                     .document(trns_info.uid)
                     .set(trns_info)
             )
+
+
+
             Result.Success(Unit)
 
         } catch (e: Exception) {
@@ -161,7 +161,42 @@ class RemoteDataSourceImpl(
         }
     }
 
-    override suspend fun getTransactions(type : String): Result<List<FirebaseTransactionInfo>> {
+    override suspend fun updateTransactionTotal(
+        amount: Int,
+        user_type: String,
+        trans_type: String
+    ): Result<Unit> {
+
+        val trans = HashMap<String, Any>()
+        trans["total"] = FieldValue.increment(amount.toLong())
+
+        return try {
+            awaitTaskCompletable(
+                remote.collection(COLLECTION_TRANSACTIONS_TOTAL)
+                    .document(trans_type)
+                    .update(trans)
+            )
+
+            if (user_type == USER_TYPE_AGENT) {
+                awaitTaskCompletable(
+                    remote.collection(COLLECTION_USERS)
+                        .document(getActiveUser())
+                        .collection(COLLECTION_TRANSACTIONS_TOTAL)
+                        .document(trans_type)
+                        .update(trans)
+                )
+            }
+
+
+
+            Result.Success(Unit)
+
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+    }
+
+    override suspend fun getTransactions(type: String): Result<List<FirebaseTransactionInfo>> {
         if (type == TYPE_TOTAL_CASH_OUT) {
             return try {
                 val task = awaitTaskResult(
@@ -175,7 +210,7 @@ class RemoteDataSourceImpl(
             } catch (e: Exception) {
                 Result.Error(e)
             }
-        }else{
+        } else {
             return try {
                 val task = awaitTaskResult(
                     remote.collection(COLLECTION_TRANSACTIONS)
@@ -196,7 +231,7 @@ class RemoteDataSourceImpl(
             return try {
                 val task = awaitTaskResult(
                     remote.collection(COLLECTION_TRANSACTIONS)
-                        .whereEqualTo("creator",getActiveUser())
+                        .whereEqualTo("creator", getActiveUser())
                         .whereEqualTo("transaction_type", TYPE_TRANSACTION_SEND_MONEY)
                         .get()
                 )
@@ -206,11 +241,11 @@ class RemoteDataSourceImpl(
             } catch (e: Exception) {
                 Result.Error(e)
             }
-        }else{
+        } else {
             return try {
                 val task = awaitTaskResult(
                     remote.collection(COLLECTION_TRANSACTIONS)
-                        .whereEqualTo("creator",getActiveUser())
+                        .whereEqualTo("creator", getActiveUser())
                         .whereEqualTo("transaction_type", TYPE_TRANSACTION_RECEIVE_MONEY)
                         .get()
                 )
@@ -223,14 +258,46 @@ class RemoteDataSourceImpl(
         }
     }
 
+    override suspend fun getTransactionsTotal(): Result<TransactionTotal> {
+        return try {
+            val task_send = awaitTaskResult(
+                remote.collection(COLLECTION_TRANSACTIONS_TOTAL).document(
+                    TYPE_TRANSACTION_SEND_MONEY
+                )
+                    .get()
+            )
+
+            val task_recieved = awaitTaskResult(
+                remote.collection(COLLECTION_TRANSACTIONS_TOTAL).document(
+                    TYPE_TRANSACTION_RECEIVE_MONEY
+                )
+                    .get()
+            )
+
+
+            val total_sent_amount = task_send.data?.get("total") as Int
+            val total_receive_amount = task_recieved.data?.get("total") as Int
+
+            val trans_total = TransactionTotal(
+                total_sent_money = total_sent_amount,
+                total_received_money = total_receive_amount
+            )
+
+            Result.Success(trans_total)
+
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+    }
+
     private fun getTransactionsFromTask(task: QuerySnapshot?): Result<List<FirebaseTransactionInfo>> {
         val movies = mutableListOf<FirebaseTransactionInfo>()
-            task?.documents?.forEach {
-                val transactionInfo = it.toObject(FirebaseTransactionInfo::class.java)
-                movies.add(transactionInfo!!)
-            }
+        task?.documents?.forEach {
+            val transactionInfo = it.toObject(FirebaseTransactionInfo::class.java)
+            movies.add(transactionInfo!!)
+        }
 
-            return Result.Success(movies)
+        return Result.Success(movies)
 
     }
 

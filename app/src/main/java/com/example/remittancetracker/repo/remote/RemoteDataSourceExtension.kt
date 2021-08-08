@@ -2,8 +2,7 @@ package com.nkr.bazaranocustomer.repo.remote
 
 import android.util.Log
 import com.google.android.gms.tasks.Task
-import com.example.remittancetracker.model.Movie
-import com.example.remittancetracker.repo.local.model.MovieDTO
+
 import timber.log.Timber
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -49,30 +48,3 @@ internal suspend fun <T> awaitTaskResultForVideoUri(task: Task<T>): T =
     }
 
 
-
-val Movie.toMovieDTO : MovieDTO
-get() = MovieDTO(
-    uid = this.uid,
-    video_url = this.video_url,
-    video_ref = this.video_ref.toString(),
-    img_url = this.img_url,
-    movie_title = this.movie_title,
-    movie_year = this.movie_year,
-    description = this.description,
-    type = this.type,
-    download_uri = ""
-)
-
-val List<MovieDTO>.toMovies: List<Movie>
-    get() = this.map {
-        Movie(
-            uid = it.uid,
-            description = it.description,
-            video_url = it.video_url,
-            video_ref = it.video_ref,
-            img_url = it.img_url,
-            movie_title = it.movie_title,
-            movie_year = it.movie_year,
-            type = it.type
-        )
-    }

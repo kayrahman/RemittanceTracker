@@ -24,9 +24,12 @@ class TransactionFragment : BaseFragment() {
     private lateinit var binding: TransactionFragmentBinding
     private val safeArgs: TransactionFragmentArgs by navArgs()
 
+    private var userType = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val transaction_type = safeArgs.transactionType
+        userType = safeArgs.userType
         viewModel.setTransactionType(transaction_type)
 
     }
@@ -81,7 +84,7 @@ class TransactionFragment : BaseFragment() {
         if (validateInfo()) {
             val actionConfirm =
                 TransactionFragmentDirections.actionTransactionFragmentToConfirmTransactionFragment(
-                    payment_type
+                    payment_type,userType
                 )
             viewModel.navigationCommand.value = NavigationCommand.To(actionConfirm)
         }else{
