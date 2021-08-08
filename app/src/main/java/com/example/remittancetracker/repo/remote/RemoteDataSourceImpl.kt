@@ -1,5 +1,6 @@
 package com.example.remittancetracker.repo.remote
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
 import com.nkr.bazaranocustomer.repo.remote.awaitTaskCompletable
@@ -9,6 +10,7 @@ import com.example.remittancetracker.repo.Result
 import com.example.remittancetracker.util.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import kotlin.collections.HashMap
 
 
@@ -259,28 +261,33 @@ class RemoteDataSourceImpl(
     }
 
     override suspend fun getTransactionsTotal(): Result<TransactionTotal> {
+        Timber.i("fetching_total : true")
+        Log.i("fetching_total","true")
         return try {
             val task_send = awaitTaskResult(
-                remote.collection(COLLECTION_TRANSACTIONS_TOTAL).document(
-                    TYPE_TRANSACTION_SEND_MONEY
-                )
+                remote.collection(COLLECTION_TRANSACTIONS_TOTAL)
+                    .document(TYPE_TRANSACTION_SEND_MONEY)
                     .get()
             )
 
             val task_recieved = awaitTaskResult(
-                remote.collection(COLLECTION_TRANSACTIONS_TOTAL).document(
-                    TYPE_TRANSACTION_RECEIVE_MONEY
-                )
+                remote.collection(COLLECTION_TRANSACTIONS_TOTAL)
+                    .document(TYPE_TRANSACTION_RECEIVE_MONEY)
                     .get()
             )
 
 
-            val total_sent_amount = task_send.data?.get("total") as Int
-            val total_receive_amount = task_recieved.data?.get("total") as Int
+            val task = task_send.data
+
+            val total_sent_amount = task_send.get("total") as Long
+            val total_receive_amount = task_recieved.get("total") as Long
+
+            Timber.i("trans_detail: sent ${total_sent_amount.toString()} received ${total_receive_amount.toString()} ")
+            Log.i("trans_total","${task.toString()}")
 
             val trans_total = TransactionTotal(
-                total_sent_money = total_sent_amount,
-                total_received_money = total_receive_amount
+                total_sent_money = total_sent_amount.toInt(),
+                total_received_money = total_receive_amount.toInt()
             )
 
             Result.Success(trans_total)

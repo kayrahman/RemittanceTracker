@@ -8,7 +8,7 @@
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="com.example.remittancetracker.ui.transaction.TransactionViewModel" >
+            type="com.example.remittancetracker.ui.transaction.transDetail.TransactionDetailViewModel" >
         </variable>
 
     </data>
@@ -55,6 +55,7 @@
             android:layout_marginBottom="@dimen/space4dp"
             android:textColor="@color/colorTextDark"
             android:textStyle="italic"
+            android:text="@{`Date : ` + viewModel.currentDate}"
             app:layout_constraintBottom_toTopOf="@+id/divider_top"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="@string/hc_date" />
@@ -64,6 +65,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/spaceNormal"
+            android:text="@{viewModel.currentDay}"
             android:textColor="@color/colorTextDark"
             android:textStyle="italic"
             app:layout_constraintBaseline_toBaselineOf="@+id/tv_date"

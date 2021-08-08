@@ -52,7 +52,7 @@
 
     <fragment
         android:id="@+id/totalCashInNOutDetailFragment"
-        android:name="com.example.remittancetracker.ui.transaction.TransactionDetailFragment"
+        android:name="com.example.remittancetracker.ui.transaction.transDetail.TransactionDetailFragment"
         android:label="Transactions" >
         <argument
             android:name="transactionType"

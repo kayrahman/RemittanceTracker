@@ -1,4 +1,4 @@
-package com.example.remittancetracker.ui.transaction
+package com.example.remittancetracker.ui.transaction.transDetail
 
 import android.app.Application
 import android.os.Build
@@ -25,7 +25,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-class TransactionViewModel(val app : Application, val repo : IRepoDataSource) : BaseViewModel(app) {
+class TransactionDetailViewModel(val app : Application, val repo : IRepoDataSource) : BaseViewModel(app) {
 
     val accountName = MutableLiveData<String>("")
     val accountNumber = MutableLiveData<String>("")
@@ -79,39 +79,6 @@ class TransactionViewModel(val app : Application, val repo : IRepoDataSource) : 
         }
     }
 
-
-    fun postTransactionInfo(user_type: String) = viewModelScope.launch{
-        val ti = validatedTransactionInfo()
-        ti?.let {
-            showLoading.value = true
-            val response = repo.uploadTransactionInfoIntoRemote(it,user_type)
-            when(response){
-                is Result.Success -> {
-                    Timber.i("post_transaction_staus : true")
-                    Log.i("post","status : true")
-
-                    val total_response = repo.updateTransactionTotalInto(it.amount,user_type,it.transaction_type)
-                    when(total_response){
-                        is Result.Success -> {
-                            isUploadSuccessful.value = true
-                            showLoading.value = false
-                        }
-                        is Result.Error -> {
-                            showLoading.value = false
-                            Timber.i("post_transaction_staus : error ${total_response.exception.toString()}")
-                        }
-                    }
-
-
-                }
-                is Result.Error -> {
-                    Timber.i("post_transaction_staus : error ${response.exception.toString()}")
-                    Log.i("post","status : false")
-                    showLoading.value = false
-                }
-            }
-        }
-    }
 
     private fun validatedTransactionInfo() : FirebaseTransactionInfo? {
         val acc_name = accountName.value.toString().trim()
@@ -172,6 +139,5 @@ class TransactionViewModel(val app : Application, val repo : IRepoDataSource) : 
         val day = LocalDateTime.now().dayOfWeek.toString()
         return day
     }
-
 
 }

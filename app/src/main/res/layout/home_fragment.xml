@@ -5,12 +5,11 @@
     tools:context=".ui.home.HomeFragment">
 
     <data>
-
         <import type="android.view.View" />
-
         <variable
             name="viewModel"
-            type="com.example.remittancetracker.ui.home.HomeViewModel"></variable>
+            type="com.example.remittancetracker.ui.home.HomeViewModel">
+        </variable>
 
     </data>
 
@@ -66,6 +65,7 @@
                 android:layout_marginStart="@dimen/spaceNormal"
                 android:layout_marginBottom="@dimen/space4dp"
                 android:textColor="@color/colorTextDark"
+                android:text="@{`Date : `+viewModel.currentDate}"
                 android:textStyle="italic"
                 app:layout_constraintBottom_toTopOf="@+id/divider_top"
                 app:layout_constraintStart_toStartOf="parent"
@@ -77,6 +77,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/spaceNormal"
                 android:textColor="@color/colorTextDark"
+                android:text="@{viewModel.getCurrentDay}"
                 android:textStyle="italic"
                 app:layout_constraintBaseline_toBaselineOf="@+id/tv_date"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -138,10 +139,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_bold"
-                        android:text="@{viewModel.totalReceivedMoney}"
+                        android:text="@{`TK `+viewModel.totalReceivedMoney.toString()}"
                         android:textAlignment="center"
+                        android:gravity="center"
                         android:textColor="@color/white_100"
-                        android:textSize="@dimen/text_size_large"
+                        android:textSize="@dimen/text_size_medium"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/divider_one"
                         tools:text="@string/string_hc_total_cash" />
@@ -194,10 +196,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_bold"
-                        android:text="@{viewModel.totalSentMoney}"
+                        android:text="@{`TK `+viewModel.totalSentMoney.toString()}"
                         android:textAlignment="center"
                         android:textColor="@color/white_100"
-                        android:textSize="@dimen/text_size_large"
+                        android:textSize="@dimen/text_size_medium"
+                        android:gravity="center"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/divider_two"
                         tools:text="@string/string_hc_total_cash" />

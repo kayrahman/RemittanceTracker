@@ -10,6 +10,7 @@ import com.example.remittancetracker.ui.authentication.AuthenticationViewModel
 import com.example.remittancetracker.ui.createAgent.CreateAgentViewModel
 import com.example.remittancetracker.ui.home.HomeViewModel
 import com.example.remittancetracker.ui.transaction.TransactionViewModel
+import com.example.remittancetracker.ui.transaction.transDetail.TransactionDetailViewModel
 import com.example.remittancetracker.util.SharedPrefsHelper
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -59,6 +60,14 @@ class App : Application() {
                     get() as IRepoDataSource
                 )
             }
+
+            viewModel {
+                TransactionDetailViewModel(
+                    this@App,
+                    get() as IRepoDataSource
+                )
+            }
+
 
             single {
                 TransactionViewModel(

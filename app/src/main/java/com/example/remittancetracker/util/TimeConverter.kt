@@ -1,5 +1,9 @@
 package com.nkr.bazaranocustomer.util
 
+import android.os.Build
+import androidx.annotation.RequiresApi
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -47,6 +51,18 @@ class TimeConverter {
 
 
 
+        @RequiresApi(Build.VERSION_CODES.O)
+        fun getCurrentDate() : String {
+            val currentDateTime = LocalDateTime.now()
+            return  currentDateTime.format(DateTimeFormatter.ISO_DATE)
+
+        }
+
+        @RequiresApi(Build.VERSION_CODES.O)
+        fun getCurrentDay() : String {
+            val day = LocalDateTime.now().dayOfWeek.toString()
+            return day
+        }
 
 
 

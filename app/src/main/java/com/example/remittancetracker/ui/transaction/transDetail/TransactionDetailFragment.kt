@@ -1,4 +1,4 @@
-package com.example.remittancetracker.ui.transaction
+package com.example.remittancetracker.ui.transaction.transDetail
 
 import android.os.Bundle
 import android.util.Log
@@ -12,6 +12,7 @@ import com.example.remittancetracker.base.BaseFragment
 import com.example.remittancetracker.base.BaseViewModel
 import com.example.remittancetracker.databinding.TotalCashInNOutDetailFragmentBinding
 import com.example.remittancetracker.ui.home.TransactionListAdapter
+import com.example.remittancetracker.ui.transaction.TransactionViewModel
 import com.example.remittancetracker.util.TYPE_TOTAL_CASH_IN
 import com.example.remittancetracker.util.TYPE_TOTAL_CASH_OUT
 import com.example.remittancetracker.util.USER_TYPE_ADMIN
@@ -20,7 +21,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TransactionDetailFragment : BaseFragment() {
 
-    private val viewModel: TransactionViewModel by viewModel()
+    private val viewModel: TransactionDetailViewModel by viewModel()
     private lateinit var binding: TotalCashInNOutDetailFragmentBinding
 
     override val _viewModel: BaseViewModel
@@ -29,12 +30,8 @@ class TransactionDetailFragment : BaseFragment() {
     private val safeArgs: TransactionDetailFragmentArgs by navArgs()
     private var trns_detail_type = ""
     private var user_type = ""
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        trns_detail_type = safeArgs.transactionType
-        user_type = safeArgs.userType
-        viewModel.setTransactionDetailType(trns_detail_type)
-    }
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,16 +46,36 @@ class TransactionDetailFragment : BaseFragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
+
+        trns_detail_type = safeArgs.transactionType
+        user_type = safeArgs.userType
+        viewModel.setTransactionDetailType(trns_detail_type)
+
+
+
         when (trns_detail_type) {
             TYPE_TOTAL_CASH_IN -> {
+
                 if(user_type == USER_TYPE_ADMIN) {
-                    viewModel.getTransactions(TYPE_TOTAL_CASH_IN,USER_TYPE_ADMIN)
+                    Log.i("trans_detail_type","${trns_detail_type.toString()}")
+                    viewModel.getTransactions(USER_TYPE_ADMIN,TYPE_TOTAL_CASH_IN)
+                }
+
+                if(user_type == USER_TYPE_AGENT) {
+                    viewModel.getTransactions( USER_TYPE_AGENT,TYPE_TOTAL_CASH_IN)
                 }
             }
             TYPE_TOTAL_CASH_OUT -> {
+
                 if(user_type == USER_TYPE_AGENT) {
-                    viewModel.getTransactions(TYPE_TOTAL_CASH_OUT, USER_TYPE_AGENT)
+                    viewModel.getTransactions( USER_TYPE_AGENT,TYPE_TOTAL_CASH_OUT)
                 }
+
+                if(user_type == USER_TYPE_ADMIN) {
+                    Log.i("trans_detail_type","${trns_detail_type.toString()}")
+                    viewModel.getTransactions(USER_TYPE_ADMIN,TYPE_TOTAL_CASH_OUT)
+                }
+
             }
             else -> {
                 viewModel.showSnackBar.value = "Something went Wrong"
@@ -75,7 +92,6 @@ class TransactionDetailFragment : BaseFragment() {
         binding.rvTransactionDetail.adapter = adapter
 
         viewModel.transactionList.observe(viewLifecycleOwner, Observer {
-            Log.i("transaction_detail", "observed : ${it.size.toString()}")
             adapter.submitList(it)
 
         })

@@ -1,6 +1,7 @@
 package com.example.remittancetracker.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,6 +35,7 @@ class HomeFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         userInfo = safeArgs.userInfo
+        Log.i("home_user_info",userInfo.toString())
         viewModel.setUserInfo(userInfo)
     }
 
@@ -58,11 +60,15 @@ class HomeFragment : BaseFragment() {
 
     private fun setupListener() {
         binding.cvTotalCashIn.setOnClickListener {
+            Log.i("user_type","${userInfo.toString()}")
             navigateToTransactionDetail(TYPE_TOTAL_CASH_IN,userInfo.user_type)
         }
         binding.cvTotalCashOut.setOnClickListener {
+            Log.i("user_type","${userInfo.toString()}")
             navigateToTransactionDetail(TYPE_TOTAL_CASH_OUT,userInfo.user_type)
         }
+
+
 
 
         binding.btnSendMoney.setOnClickListener {
