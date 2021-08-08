@@ -52,7 +52,7 @@ class HomeFragment : BaseFragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-        viewModel.getTransactionsTotal()
+        viewModel.getTransactionsTotal(userInfo.user_type)
 
         setupListener()
 

@@ -48,6 +48,10 @@ class MashProRepository(
         return remote.getTransactionsTotal()
     }
 
+    override suspend fun getAgentTransactionsTotalFromRemote(): Result<TransactionTotal> {
+        return remote.getAgentTransactionsTotal()
+    }
+
 
 }
 

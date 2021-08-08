@@ -22,8 +22,8 @@ import java.util.*
 class HomeViewModel(app: Application,val repo : IRepoDataSource) : BaseViewModel(app) {
     val isUserTypeAdmin = MutableLiveData<Boolean>(false)
     val userInfo = MutableLiveData<FirebaseUserInfo>()
-    val totalSentMoney = MutableLiveData<Int>()
-    val totalReceivedMoney = MutableLiveData<Int>()
+    val totalSentMoney = MutableLiveData<Int>(0)
+    val totalReceivedMoney = MutableLiveData<Int>(0)
 
     fun setUserInfo(user_info: FirebaseUserInfo){
         userInfo.value = user_info
@@ -33,24 +33,46 @@ class HomeViewModel(app: Application,val repo : IRepoDataSource) : BaseViewModel
     }
 
 
-    fun getTransactionsTotal() = viewModelScope.launch {
-        val response = repo.getTransactionsTotalFromRemote()
-        when(response){
-            is Result.Success -> {
-                val trans_detail = response.data
-                totalSentMoney.value = trans_detail.total_sent_money
-                totalReceivedMoney.value = trans_detail.total_received_money
+    fun getTransactionsTotal(user_type : String) = viewModelScope.launch {
+        if(user_type == USER_TYPE_ADMIN) {
+            val response = repo.getTransactionsTotalFromRemote()
+            when (response) {
+                is Result.Success -> {
+                    val trans_detail = response.data
+                    totalSentMoney.value = trans_detail.total_sent_money
+                    totalReceivedMoney.value = trans_detail.total_received_money
 
-                Timber.i("trans_response : ${response.toString()}")
-                Log.i("trans_response" ," ${trans_detail.toString()}")
+                    Timber.i("trans_response : ${response.toString()}")
+                    Log.i("trans_response", " ${trans_detail.toString()}")
 
+                }
+                is Result.Error -> {
+                    Log.i("trans_response", " error ${response.exception.toString()}")
+                }
             }
-            is Result.Error -> {
-                Log.i("trans_response"," error ${response.exception.toString()}")
-            }
+        }else{
+            getAgentTransactionTotal()
         }
     }
 
+
+   suspend fun getAgentTransactionTotal(){
+       val response = repo.getAgentTransactionsTotalFromRemote()
+       when (response) {
+           is Result.Success -> {
+               val trans_detail = response.data
+               totalSentMoney.value = trans_detail.total_sent_money
+               totalReceivedMoney.value = trans_detail.total_received_money
+
+               Timber.i("trans_response : ${response.toString()}")
+               Log.i("trans_response", " ${trans_detail.toString()}")
+
+           }
+           is Result.Error -> {
+               Log.i("trans_response", " error ${response.exception.toString()}")
+           }
+       }
+   }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun getCurrentDate() : String {

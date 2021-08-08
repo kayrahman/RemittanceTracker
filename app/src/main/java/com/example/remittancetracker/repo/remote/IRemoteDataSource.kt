@@ -27,6 +27,7 @@ interface IRemoteDataSource {
     suspend fun getTransactions(type : String) : Result<List<FirebaseTransactionInfo>>
     suspend fun getAgentTransactions(type : String) : Result<List<FirebaseTransactionInfo>>
     suspend fun getTransactionsTotal() : Result<TransactionTotal>
+    suspend fun getAgentTransactionsTotal() : Result<TransactionTotal>
 
 
 }

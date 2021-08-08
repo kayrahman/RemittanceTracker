@@ -20,4 +20,5 @@ interface IRepoDataSource {
     suspend fun getTransactionsInfoFromRemote(type : String): Result<List<FirebaseTransactionInfo>>
     suspend fun getAgentTransactionsInfoFromRemote(type : String): Result<List<FirebaseTransactionInfo>>
     suspend fun getTransactionsTotalFromRemote() : Result<TransactionTotal>
+    suspend fun getAgentTransactionsTotalFromRemote() : Result<TransactionTotal>
 }

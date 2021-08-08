@@ -297,6 +297,45 @@ class RemoteDataSourceImpl(
         }
     }
 
+    override suspend fun getAgentTransactionsTotal(): Result<TransactionTotal> {
+        Timber.i("fetching_total : true")
+        Log.i("fetching_total","true")
+        return try {
+            val task_send = awaitTaskResult(
+                remote.collection(COLLECTION_USERS)
+                    .document(getActiveUser())
+                    .collection(COLLECTION_TRANSACTIONS_TOTAL)
+                    .document(TYPE_TRANSACTION_SEND_MONEY)
+                    .get()
+            )
+
+            val task_recieved = awaitTaskResult(
+                remote.collection(COLLECTION_USERS)
+                    .document(getActiveUser())
+                    .collection(COLLECTION_TRANSACTIONS_TOTAL)
+                    .document(TYPE_TRANSACTION_RECEIVE_MONEY)
+                    .get()
+            )
+
+
+            val total_sent_amount = task_send.get("total") as Long
+            val total_receive_amount = task_recieved.get("total") as Long
+
+            Timber.i("trans_detail: sent ${total_sent_amount.toString()} received ${total_receive_amount.toString()} ")
+
+
+            val trans_total = TransactionTotal(
+                total_sent_money = total_sent_amount.toInt(),
+                total_received_money = total_receive_amount.toInt()
+            )
+
+            Result.Success(trans_total)
+
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+    }
+
     private fun getTransactionsFromTask(task: QuerySnapshot?): Result<List<FirebaseTransactionInfo>> {
         val movies = mutableListOf<FirebaseTransactionInfo>()
         task?.documents?.forEach {
