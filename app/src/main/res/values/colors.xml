@@ -22,6 +22,7 @@
     <color name="color_dark_yellow">#ECA235</color>
     <color name="colorTransparentBlack">#42000000</color>
     <color name="colorGray">#E5E5E5</color>
+    <color name="colorBoxOutlineColor">#FF40C4FF</color>
     <color name="colorTransparentPurple_700">#332020c2</color>
     <color name="colorTransparentPurple">#33FE7247</color>
     <color name="colorTransparentPurple_200">#50BB86FC</color>

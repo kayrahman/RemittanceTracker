@@ -5,8 +5,6 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import com.example.remittancetracker.R
 import com.example.remittancetracker.base.BaseViewModel
@@ -17,13 +15,10 @@ import kotlinx.coroutines.launch
 import com.example.remittancetracker.repo.Result
 import com.example.remittancetracker.util.TYPE_TOTAL_CASH_IN
 import com.example.remittancetracker.util.USER_TYPE_ADMIN
-import com.example.remittancetracker.util.USER_TYPE_AGENT
 import com.nkr.bazaranocustomer.util.SingleLiveEvent
 import timber.log.Timber
-import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.*
 
 class TransactionViewModel(val app : Application, val repo : IRepoDataSource) : BaseViewModel(app) {
 

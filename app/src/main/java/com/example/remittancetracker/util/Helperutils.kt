@@ -2,6 +2,7 @@ package com.nkr.bazarano.util
 
 import android.util.Log
 import java.security.SecureRandom
+import java.security.Timestamp
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -11,9 +12,7 @@ class Helperutils {
     companion object {
         fun formattedDateTime(dateTime: String?): String {
             var date = "29/05/19"
-
             try {
-
                 var format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
                 format.timeZone = TimeZone.getTimeZone("Etc/UTC")
                 val newDate = format.parse(dateTime)
@@ -31,15 +30,13 @@ class Helperutils {
 
         }
         fun formattedDate(dateTime: String?): String {
-
             var date: String
-
             //var format = SimpleDateFormat("EEE, dd MMM yyyy hh:mm:ss Z")
             var format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
             format.timeZone = TimeZone.getTimeZone("Etc/UTC")
             val newDate = format.parse(dateTime)
 
-            format = SimpleDateFormat("d MMM yy")
+          //  format = SimpleDateFormat("d MMM yy")
             date = format.format(newDate)
 
             Log.d("Formatted_time", date)
@@ -48,13 +45,7 @@ class Helperutils {
         }
 
 
-
-
-
-
         fun formattedTime(dateTime: String?): String {
-
-
             //var format = SimpleDateFormat("EEE, dd MMM yyyy hh:mm:ss Z")
             var format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
             format.timeZone = TimeZone.getTimeZone("Etc/UTC")
@@ -99,6 +90,9 @@ class Helperutils {
             println(output)
             return output
         }
+
+
+
 
     }
 

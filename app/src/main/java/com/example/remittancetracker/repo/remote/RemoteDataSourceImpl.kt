@@ -8,6 +8,7 @@ import com.nkr.bazaranocustomer.repo.remote.awaitTaskResult
 import com.example.remittancetracker.model.*
 import com.example.remittancetracker.repo.Result
 import com.example.remittancetracker.util.*
+import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -23,9 +24,9 @@ class RemoteDataSourceImpl(
         return auth.currentUser?.uid.toString()
     }
 
-    /*
 
-    override suspend fun getRegistrationToken(): Result<ArrayList<String>> {
+
+     suspend fun getRegistrationToken(): Result<ArrayList<String>> {
         return try {
             val task = awaitTaskResult(
                 remote.collection(COLLECTION_USERS)
@@ -47,7 +48,7 @@ class RemoteDataSourceImpl(
 
     }
 
-    override suspend fun setFCMRegistrationToken(tokens: ArrayList<String>): Result<Unit> {
+     suspend fun setFCMRegistrationToken(tokens: ArrayList<String>): Result<Unit> {
         val user_map = HashMap<String, Any>()
         user_map["registration_tokens"] = tokens
 
@@ -66,7 +67,7 @@ class RemoteDataSourceImpl(
         }
     }
 
-    */
+
 
 
     //----------------USER AUTHENTICATION ACTIVITY--------------/
@@ -78,6 +79,27 @@ class RemoteDataSourceImpl(
                     .document(agent_info.uid)
                     .set(agent_info)
             )
+
+            val trans = HashMap<String,Any>()
+            trans["total"] = 0
+
+            awaitTaskCompletable(
+                remote.collection(COLLECTION_USERS)
+                    .document(agent_info.uid)
+                    .collection(COLLECTION_TRANSACTIONS_TOTAL)
+                    .document(TYPE_TRANSACTION_SEND_MONEY)
+                    .set(trans)
+            )
+
+            awaitTaskCompletable(
+                remote.collection(COLLECTION_USERS)
+                    .document(agent_info.uid)
+                    .collection(COLLECTION_TRANSACTIONS_TOTAL)
+                    .document(TYPE_TRANSACTION_RECEIVE_MONEY)
+                    .set(trans)
+            )
+
+
             Result.Success(Unit)
 
         } catch (e: Exception) {
@@ -142,6 +164,23 @@ class RemoteDataSourceImpl(
         }
     }
 
+    override suspend fun updateAdminToken(token: String): Result<Unit> {
+        val token_map = HashMap<String,Any>()
+        token_map["registration_token"] = token
+
+        return try {
+            awaitTaskCompletable(
+                remote.collection(COLLECTION_USERS)
+                    .document(getActiveUser())
+                    .update(token_map)
+            )
+            Result.Success(Unit)
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+
+    }
+
     override suspend fun uploadTransactionInfo(
         info: FirebaseTransactionInfo,
         user_type: String
@@ -153,9 +192,6 @@ class RemoteDataSourceImpl(
                     .document(trns_info.uid)
                     .set(trns_info)
             )
-
-
-
             Result.Success(Unit)
 
         } catch (e: Exception) {

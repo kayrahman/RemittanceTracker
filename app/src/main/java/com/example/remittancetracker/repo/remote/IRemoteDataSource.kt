@@ -17,6 +17,7 @@ interface IRemoteDataSource {
     suspend fun updateUserSubscriptionPlan(sub_plan : String) : Result<Unit>
     suspend fun getUserInfo() : Result<FirebaseUserInfo>
     suspend fun updateUserType(user_type:Int) : Result<Unit>
+    suspend fun updateAdminToken(token : String) : Result<Unit>
 
 
     suspend fun updateAgentInfo(user_info : FirebaseUserInfo) : Result<Unit>

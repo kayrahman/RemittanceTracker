@@ -10,6 +10,8 @@ interface IRepoDataSource {
     suspend fun getUserInfoFromRemote() : Result<FirebaseUserInfo>
     suspend fun updateRemoteUserType(type:Int) : Result<Unit>
 
+    suspend fun updateAdminTokenToRemote(token : String) : Result<Unit>
+
     suspend fun updateUserSubscriptionPlanToRemote(sub_plan : String) : Result<Unit>
     suspend fun updateAgentInfoIntoRemote(agent_info : FirebaseUserInfo) : Result<Unit>
 

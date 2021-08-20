@@ -34,6 +34,25 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/tv_total_cash_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_bold"
+                android:text="@{viewModel.postType + ` Money`}"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_size_large"
+                android:textStyle="italic"
+                tools:text = "Send Money"
+                android:gravity="center"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_top_bg"
+                app:layout_constraintEnd_toEndOf="@+id/iv_top_bg"
+                app:layout_constraintStart_toStartOf="@+id/iv_top_bg"
+                app:layout_constraintTop_toTopOf="@+id/iv_top_bg"
+
+                />
+
+
+            <TextView
                 android:id="@+id/tv_date"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -78,8 +97,8 @@
                 android:layout_marginEnd="@dimen/spaceNormal"
                 android:hint="@string/label_name"
                 app:boxBackgroundColor="@color/colorTransparentHighlight"
-                app:boxStrokeColor="@color/colorGray"
-                app:hintTextColor="@color/colorGray"
+                app:boxStrokeColor="@color/colorHighlight"
+                app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
                 app:layout_constraintBottom_toTopOf="@+id/til_amount"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -109,8 +128,8 @@
                 android:layout_marginEnd="@dimen/spaceNormal"
                 android:hint="@string/label_amount"
                 app:boxBackgroundColor="@color/colorTransparentHighlight"
-                app:boxStrokeColor="@color/colorGray"
-                app:hintTextColor="@color/colorGray"
+                app:boxStrokeColor="@color/colorHighlight"
+                app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
                 app:layout_constraintBottom_toTopOf="@+id/til_city"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -140,8 +159,8 @@
                 android:layout_marginEnd="@dimen/spaceNormal"
                 android:hint="@string/label_city"
                 app:boxBackgroundColor="@color/colorTransparentHighlight"
-                app:boxStrokeColor="@color/colorGray"
-                app:hintTextColor="@color/colorGray"
+                app:boxStrokeColor="@color/colorHighlight"
+                app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_weight="1"

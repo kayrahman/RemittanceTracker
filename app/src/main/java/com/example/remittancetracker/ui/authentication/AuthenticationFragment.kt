@@ -11,7 +11,9 @@ import com.example.remittancetracker.R
 import com.example.remittancetracker.base.BaseFragment
 import com.example.remittancetracker.base.BaseViewModel
 import com.example.remittancetracker.databinding.AuthenticationFragmentBinding
+import com.example.remittancetracker.util.USER_TYPE_ADMIN
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.ktx.Firebase
 import com.nkr.bazaranocustomer.base.NavigationCommand
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -72,6 +74,14 @@ class AuthenticationFragment : BaseFragment() {
                     viewModel.showLoading.value = false
                     if (task.isSuccessful) {
                         val user = auth.currentUser
+
+                            FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener { instanceIdResult ->
+                                val token = instanceIdResult.token
+                                viewModel.handleEvent(token)
+                            }
+
+
+
                        // navigateToHomeScreen()
 
                     } else {

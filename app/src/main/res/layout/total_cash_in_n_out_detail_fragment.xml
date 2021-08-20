@@ -14,7 +14,6 @@
     </data>
 
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -23,8 +22,8 @@
             android:id="@+id/iv_top_bg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_top_background"
             android:scaleType="fitXY"
+            android:src="@drawable/ic_top_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -34,30 +33,68 @@
             android:id="@+id/tv_total_cash_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
             android:text="@{viewModel.transactionDetailType}"
-            tools:text="@string/label_total_cash_in"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/text_size_large"
-            android:fontFamily="@font/roboto_bold"
             android:textStyle="italic"
-            app:layout_constraintStart_toStartOf="@+id/iv_top_bg"
-            app:layout_constraintEnd_toEndOf="@+id/iv_top_bg"
-            app:layout_constraintTop_toTopOf="@+id/iv_top_bg"
             app:layout_constraintBottom_toBottomOf="@+id/iv_top_bg"
+            app:layout_constraintEnd_toEndOf="@+id/iv_top_bg"
+            app:layout_constraintStart_toStartOf="@+id/iv_top_bg"
+            app:layout_constraintTop_toTopOf="@+id/iv_top_bg"
+            tools:text="@string/label_total_cash_in"
 
             />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_from"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spaceNormal"
+            android:layout_marginEnd="@dimen/space2dp"
+            android:text="From"
+            app:layout_constraintEnd_toStartOf="@+id/btn_to"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_top_bg" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_to"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space2dp"
+            android:layout_marginEnd="@dimen/spaceNormal"
+            android:text="To"
+            app:layout_constraintBaseline_toBaselineOf="@+id/btn_from"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btn_from" />
+
+        <View
+            android:id="@+id/divider_top"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/space4dp"
+            android:background="@color/colorTextDark"
+            app:layout_constraintTop_toBottomOf="@+id/btn_from"
+            tools:layout_editor_absoluteX="16dp" />
+
+
 
         <TextView
             android:id="@+id/tv_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spaceNormal"
-            android:layout_marginBottom="@dimen/space4dp"
+            android:text="@{`Date : ` + viewModel.currentDate}"
             android:textColor="@color/colorTextDark"
             android:textStyle="italic"
-            android:text="@{`Date : ` + viewModel.currentDate}"
-            app:layout_constraintBottom_toTopOf="@+id/divider_top"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider_top"
+            android:layout_marginTop="@dimen/spaceNormal"
             tools:text="@string/hc_date" />
 
         <TextView
@@ -74,15 +111,16 @@
 
 
         <View
-            android:id="@+id/divider_top"
+            android:id="@+id/divider_two"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginStart="@dimen/spaceNormal"
             android:layout_marginTop="@dimen/space4dp"
             android:layout_marginEnd="@dimen/spaceNormal"
             android:layout_marginBottom="@dimen/space4dp"
-            android:background="@color/colorTextDark"
-            app:layout_constraintTop_toBottomOf="@+id/iv_top_bg" />
+            android:background="@color/light_blue_900"
+            app:layout_constraintTop_toBottomOf="@id/label_account_number" />
+
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -98,28 +136,27 @@
             android:id="@+id/label_no_data"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/label_no_data"
-            android:textColor="@color/light_blue_A200"
             android:fontFamily="@font/roboto_condensed_bold"
+            android:text="@string/label_no_data"
             android:textAlignment="center"
-            android:visibility="@{viewModel.showNoData?View.VISIBLE:View.GONE}"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:textColor="@color/light_blue_A200"
+            android:visibility="@{viewModel.showNoData?View.VISIBLE:View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <TextView
             android:id="@+id/label_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spaceNormal"
+            android:fontFamily="@font/roboto_condensed_bold"
             android:text="@string/label_name"
             android:textColor="@color/light_blue_A200"
-            android:fontFamily="@font/roboto_condensed_bold"
             android:textStyle="italic"
-            android:layout_marginStart="@dimen/spaceNormal"
             app:layout_constraintBaseline_toBaselineOf="@+id/label_account_number"
             app:layout_constraintEnd_toStartOf="@+id/label_account_number"
             app:layout_constraintHorizontal_bias="0.5"
@@ -130,43 +167,31 @@
             android:id="@+id/label_account_number"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spaceNormal"
+            android:fontFamily="@font/roboto_condensed_bold"
             android:text="@string/label_acc_number"
             android:textColor="@color/light_blue_A200"
-            android:fontFamily="@font/roboto_condensed_bold"
             android:textStyle="italic"
-            android:layout_marginTop="@dimen/spaceNormal"
-            app:layout_constraintTop_toBottomOf="@+id/divider_top"
             app:layout_constraintBottom_toTopOf="@+id/divider_two"
             app:layout_constraintEnd_toStartOf="@+id/label_date"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/label_name" />
+            app:layout_constraintStart_toEndOf="@+id/label_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_date" />
 
         <TextView
             android:id="@+id/label_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/label_date"
-            android:textColor="@color/light_blue_A200"
-            android:fontFamily="@font/roboto_condensed_bold"
-            android:textStyle="italic"
             android:layout_marginEnd="@dimen/spaceLarge"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:text="@string/label_date"
             android:textAlignment="textEnd"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/label_account_number"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/light_blue_A200"
+            android:textStyle="italic"
             app:layout_constraintBaseline_toBaselineOf="@+id/label_account_number"
-            />
-
-        <View
-            android:id="@+id/divider_two"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="@dimen/spaceNormal"
-            android:layout_marginTop="@dimen/space4dp"
-            android:layout_marginEnd="@dimen/spaceNormal"
-            android:layout_marginBottom="@dimen/space4dp"
-            android:background="@color/light_blue_900"
-            app:layout_constraintTop_toBottomOf="@id/label_account_number"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/label_account_number" />
 
 
 

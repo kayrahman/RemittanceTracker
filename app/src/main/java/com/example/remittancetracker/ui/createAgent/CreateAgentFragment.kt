@@ -19,7 +19,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CreateAgentFragment : BaseFragment() {
 
-    private val viewModel: AuthenticationViewModel by viewModel()
+    private val viewModel: CreateAgentViewModel by viewModel()
     override val _viewModel: BaseViewModel
         get() = viewModel
 
@@ -78,7 +78,7 @@ class CreateAgentFragment : BaseFragment() {
 
                 } else {
                     // If sign in fails, display a message to the user.
-                    viewModel.showSnackBar.value = "Singin Unsuccessful"
+                    viewModel.showSnackBar.value = "Something went wrong"
                 }
             }
         }else{

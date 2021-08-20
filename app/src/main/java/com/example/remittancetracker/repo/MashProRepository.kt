@@ -16,6 +16,10 @@ class MashProRepository(
         return remote.updateUserType(type)
     }
 
+    override suspend fun updateAdminTokenToRemote(token: String): Result<Unit> {
+        return remote.updateAdminToken(token)
+    }
+
     override suspend fun updateAgentInfoIntoRemote(agent_info: FirebaseUserInfo): Result<Unit> {
         return remote.updateAgentInfo(agent_info)
     }

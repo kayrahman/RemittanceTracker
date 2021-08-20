@@ -32,4 +32,7 @@
     <string name="label_receive">Receive</string>
     <string name="label_payment_method">Bank/Bkash</string>
     <string name="label_no_data">No data found</string>
+    <string name="channel_transaction">remittence_transaction</string>
+    <string name="channel_order_confirmed_name">channel_transaction</string>
+    <string name="notification_title_order_rcvd">New Transaction</string>
 </resources>
