@@ -20,7 +20,11 @@ interface IRepoDataSource {
     suspend fun uploadTransactionInfoIntoRemote(info : FirebaseTransactionInfo, user_type:String): Result<Unit>
     suspend fun updateTransactionTotalInto(amount : Int, user_type: String,trans_type : String) : Result<Unit>
     suspend fun getTransactionsInfoFromRemote(type : String): Result<List<FirebaseTransactionInfo>>
+    suspend fun getFilteredTransactionsInfoByDateFromRemote(type : String,start_date:Long,end_date:Long): Result<List<FirebaseTransactionInfo>>
+
     suspend fun getAgentTransactionsInfoFromRemote(type : String): Result<List<FirebaseTransactionInfo>>
+    suspend fun getFilteredAgentTransactionsInfoByDateFromRemote(type : String,start_date:Long,end_date:Long): Result<List<FirebaseTransactionInfo>>
+
     suspend fun getTransactionsTotalFromRemote() : Result<TransactionTotal>
     suspend fun getAgentTransactionsTotalFromRemote() : Result<TransactionTotal>
 }

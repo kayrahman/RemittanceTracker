@@ -2,6 +2,8 @@ package com.example.remittancetracker.repo
 
 import com.example.remittancetracker.model.*
 import com.example.remittancetracker.repo.remote.IRemoteDataSource
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class MashProRepository(
     val remote: IRemoteDataSource
@@ -44,8 +46,28 @@ class MashProRepository(
         return remote.getTransactions(trns_type)
     }
 
+    override suspend fun getFilteredTransactionsInfoByDateFromRemote(
+        type: String,
+        start_date: Long,
+        end_date: Long
+    ): Result<List<FirebaseTransactionInfo>> {
+        return withContext(Dispatchers.IO){
+            remote.getFilteredTransactionsByDate(type,start_date,end_date)
+        }
+    }
+
     override suspend fun getAgentTransactionsInfoFromRemote(type: String): Result<List<FirebaseTransactionInfo>> {
         return remote.getAgentTransactions(type)
+    }
+
+    override suspend fun getFilteredAgentTransactionsInfoByDateFromRemote(
+        type: String,
+        start_date: Long,
+        end_date: Long
+    ): Result<List<FirebaseTransactionInfo>> {
+        return withContext(Dispatchers.IO){
+            remote.getFilteredAgentTransactionsByDate(type,start_date,end_date)
+        }
     }
 
     override suspend fun getTransactionsTotalFromRemote(): Result<TransactionTotal> {

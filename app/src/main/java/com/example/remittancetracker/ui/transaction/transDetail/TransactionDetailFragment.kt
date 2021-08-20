@@ -57,25 +57,20 @@ class TransactionDetailFragment : BaseFragment() {
         viewModel.setTransactionDetailType(trns_detail_type)
 
 
-
         when (trns_detail_type) {
             TYPE_TOTAL_CASH_IN -> {
-
                 if(user_type == USER_TYPE_ADMIN) {
                     Log.i("trans_detail_type","${trns_detail_type.toString()}")
                     viewModel.getTransactions(USER_TYPE_ADMIN,TYPE_TOTAL_CASH_IN)
                 }
-
                 if(user_type == USER_TYPE_AGENT) {
                     viewModel.getTransactions( USER_TYPE_AGENT,TYPE_TOTAL_CASH_IN)
                 }
             }
             TYPE_TOTAL_CASH_OUT -> {
-
                 if(user_type == USER_TYPE_AGENT) {
                     viewModel.getTransactions( USER_TYPE_AGENT,TYPE_TOTAL_CASH_OUT)
                 }
-
                 if(user_type == USER_TYPE_ADMIN) {
                     Log.i("trans_detail_type","${trns_detail_type.toString()}")
                     viewModel.getTransactions(USER_TYPE_ADMIN,TYPE_TOTAL_CASH_OUT)
@@ -102,7 +97,8 @@ class TransactionDetailFragment : BaseFragment() {
 
             datePicker.addOnPositiveButtonClickListener {
                 binding.btnFrom.text = datePicker.headerText
-                val date = formattedDate(datePicker.headerText)
+                //val date = formattedDate(datePicker.headerText)
+                viewModel.setStartDate(it)
 
             }
 
@@ -117,10 +113,40 @@ class TransactionDetailFragment : BaseFragment() {
 
             datePicker.addOnPositiveButtonClickListener {
                 binding.btnTo.text = datePicker.headerText
-                val date = formattedDate(datePicker.headerText)
+               // val date = formattedDate(datePicker.headerText)
+                viewModel.setEndDate(it)
+
+                fetchFilteredTransactions()
 
             }
 
+        }
+    }
+
+    private fun fetchFilteredTransactions() {
+        when (trns_detail_type) {
+            TYPE_TOTAL_CASH_IN -> {
+                if(user_type == USER_TYPE_ADMIN) {
+                    Log.i("trans_detail_type","${trns_detail_type.toString()}")
+                    viewModel.filterTransactionsByDate(USER_TYPE_ADMIN,TYPE_TOTAL_CASH_IN)
+                }
+                if(user_type == USER_TYPE_AGENT) {
+                    viewModel.filterTransactionsByDate( USER_TYPE_AGENT,TYPE_TOTAL_CASH_IN)
+                }
+            }
+            TYPE_TOTAL_CASH_OUT -> {
+                if(user_type == USER_TYPE_AGENT) {
+                    viewModel.filterTransactionsByDate( USER_TYPE_AGENT,TYPE_TOTAL_CASH_OUT)
+                }
+                if(user_type == USER_TYPE_ADMIN) {
+                    Log.i("trans_detail_type","${trns_detail_type.toString()}")
+                    viewModel.filterTransactionsByDate(USER_TYPE_ADMIN,TYPE_TOTAL_CASH_OUT)
+                }
+
+            }
+            else -> {
+                viewModel.showSnackBar.value = "Something went Wrong"
+            }
         }
     }
 

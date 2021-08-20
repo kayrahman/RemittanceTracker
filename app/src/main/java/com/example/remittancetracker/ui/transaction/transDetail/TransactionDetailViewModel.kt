@@ -34,6 +34,9 @@ class TransactionDetailViewModel(val app : Application, val repo : IRepoDataSour
 
     val isUploadSuccessful = SingleLiveEvent<Boolean>()
 
+    val startDate = MutableLiveData<Long>(0)
+    val endDate = MutableLiveData<Long>(0)
+
     fun setPaymentMethodType(payment_type: String) {
         paymentMethodType.value = payment_type
     }
@@ -49,7 +52,6 @@ class TransactionDetailViewModel(val app : Application, val repo : IRepoDataSour
 
 
     fun getTransactions(user_type : String,transaction_type: String) = viewModelScope.launch {
-
         val response = if(user_type == USER_TYPE_ADMIN) {
             Log.i("transaction_admin","transaction_admin ${transaction_type}")
             repo.getTransactionsInfoFromRemote(transaction_type)
@@ -132,6 +134,49 @@ class TransactionDetailViewModel(val app : Application, val repo : IRepoDataSour
     fun getCurrentDay() : String {
         val day = LocalDateTime.now().dayOfWeek.toString()
         return day
+    }
+
+    fun setStartDate(it: Long) {
+        startDate.value = it
+    }
+
+    fun setEndDate(it: Long) {
+        endDate.value = it
+    }
+
+
+
+    fun filterTransactionsByDate(user_type : String,transaction_type: String) = viewModelScope.launch {
+        if (startDate.value != 0L && endDate.value != 0L) {
+            val response = if (user_type == USER_TYPE_ADMIN) {
+                Log.i("transaction_admin", "transaction_admin ${transaction_type}")
+              //  repo.getTransactionsInfoFromRemote(transaction_type)
+                repo.getFilteredTransactionsInfoByDateFromRemote(transaction_type,startDate.value!!,endDate.value!!)
+            } else {
+                repo.getFilteredAgentTransactionsInfoByDateFromRemote(transaction_type,startDate.value!!,endDate.value!!)
+            }
+
+            when (response) {
+                is Result.Success -> {
+                    val transactions = response.data
+                    transactionList.value = transactions
+                    if (transactions.isEmpty()) {
+                        showNoData.value = true
+                    }
+                    Log.i("filtered_trans", "transactions : ${transactions.size.toString()}")
+                }
+                is Result.Error -> {
+                    showNoData.value = true
+                    Log.i(
+                        "filtered_trans",
+                        "transactions : error ${response.exception.toString()}"
+                    )
+                }
+            }
+        } else {
+                showSnackBar.value = "End date is not selected"
+        }
+
     }
 
 }

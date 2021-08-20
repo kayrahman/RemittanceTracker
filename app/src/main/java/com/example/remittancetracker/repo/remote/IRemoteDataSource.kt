@@ -26,7 +26,11 @@ interface IRemoteDataSource {
     suspend fun uploadTransactionInfo(info: FirebaseTransactionInfo, user_type: String) : Result<Unit>
     suspend fun updateTransactionTotal(amount : Int, user_type: String,trans_type : String) : Result<Unit>
     suspend fun getTransactions(type : String) : Result<List<FirebaseTransactionInfo>>
+    suspend fun getFilteredTransactionsByDate(type : String,start_date:Long,end_date:Long) : Result<List<FirebaseTransactionInfo>>
+
     suspend fun getAgentTransactions(type : String) : Result<List<FirebaseTransactionInfo>>
+    suspend fun getFilteredAgentTransactionsByDate(type : String,start_date:Long,end_date:Long) : Result<List<FirebaseTransactionInfo>>
+
     suspend fun getTransactionsTotal() : Result<TransactionTotal>
     suspend fun getAgentTransactionsTotal() : Result<TransactionTotal>
 

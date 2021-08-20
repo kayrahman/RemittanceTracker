@@ -264,6 +264,43 @@ class RemoteDataSourceImpl(
         }
     }
 
+
+    override suspend fun getFilteredTransactionsByDate(type: String,start_date:Long,end_date:Long): Result<List<FirebaseTransactionInfo>> {
+        if (type == TYPE_TOTAL_CASH_OUT) {
+            return try {
+                val task = awaitTaskResult(
+                    remote.collection(COLLECTION_TRANSACTIONS)
+                        .whereGreaterThanOrEqualTo("createdAt",start_date)
+                        .whereLessThanOrEqualTo("createdAt",end_date)
+                        .whereEqualTo("transaction_type", TYPE_TRANSACTION_SEND_MONEY)
+                        .get()
+                )
+
+                getTransactionsFromTask(task)
+
+            } catch (e: Exception) {
+                Result.Error(e)
+            }
+        } else {
+            return try {
+                val task = awaitTaskResult(
+                    remote.collection(COLLECTION_TRANSACTIONS)
+                        .whereGreaterThanOrEqualTo("createdAt",start_date)
+                        .whereLessThanOrEqualTo("createdAt",end_date)
+                        .whereEqualTo("transaction_type", TYPE_TRANSACTION_RECEIVE_MONEY)
+                        .get()
+                )
+
+                getTransactionsFromTask(task)
+
+            } catch (e: Exception) {
+                Result.Error(e)
+            }
+        }
+    }
+
+
+
     override suspend fun getAgentTransactions(type: String): Result<List<FirebaseTransactionInfo>> {
         if (type == TYPE_TOTAL_CASH_OUT) {
             return try {
@@ -285,6 +322,42 @@ class RemoteDataSourceImpl(
                     remote.collection(COLLECTION_TRANSACTIONS)
                         .whereEqualTo("creator", getActiveUser())
                         .whereEqualTo("transaction_type", TYPE_TRANSACTION_RECEIVE_MONEY)
+                        .get()
+                )
+
+                getTransactionsFromTask(task)
+
+            } catch (e: Exception) {
+                Result.Error(e)
+            }
+        }
+    }
+
+    override suspend fun getFilteredAgentTransactionsByDate(type: String,start_date:Long,end_date:Long): Result<List<FirebaseTransactionInfo>> {
+        if (type == TYPE_TOTAL_CASH_OUT) {
+            return try {
+                val task = awaitTaskResult(
+                    remote.collection(COLLECTION_TRANSACTIONS)
+                        .whereEqualTo("creator", getActiveUser())
+                        .whereEqualTo("transaction_type", TYPE_TRANSACTION_SEND_MONEY)
+                        .whereGreaterThanOrEqualTo("createdAt",start_date)
+                        .whereLessThanOrEqualTo("createdAt",end_date)
+                        .get()
+                )
+
+                getTransactionsFromTask(task)
+
+            } catch (e: Exception) {
+                Result.Error(e)
+            }
+        } else {
+            return try {
+                val task = awaitTaskResult(
+                    remote.collection(COLLECTION_TRANSACTIONS)
+                        .whereEqualTo("creator", getActiveUser())
+                        .whereEqualTo("transaction_type", TYPE_TRANSACTION_RECEIVE_MONEY)
+                        .whereGreaterThanOrEqualTo("createdAt",start_date)
+                        .whereLessThanOrEqualTo("createdAt",end_date)
                         .get()
                 )
 
