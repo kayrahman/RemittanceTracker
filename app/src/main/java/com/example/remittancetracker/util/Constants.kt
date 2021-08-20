@@ -22,3 +22,5 @@ const val TYPE_TRANSACTION_RECEIVE_MONEY = "receive_money"
 
 const val USER_TYPE_ADMIN = "ADMIN"
 const val USER_TYPE_AGENT = "AGENT"
+
+const val A_DAY_IN_LONG = 86400000

@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spaceNormal"
             android:layout_marginEnd="@dimen/space2dp"
-            android:text="From"
+            android:text="Start Date"
             app:layout_constraintEnd_toStartOf="@+id/btn_to"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/space2dp"
             android:layout_marginEnd="@dimen/spaceNormal"
-            android:text="To"
+            android:text="End date"
             app:layout_constraintBaseline_toBaselineOf="@+id/btn_from"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -142,10 +142,10 @@
             android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
             android:textColor="@color/light_blue_A200"
             android:visibility="@{viewModel.showNoData?View.VISIBLE:View.GONE}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="@+id/rv_transaction_detail"
+            app:layout_constraintEnd_toEndOf="@+id/rv_transaction_detail"
+            app:layout_constraintStart_toStartOf="@+id/rv_transaction_detail"
+            app:layout_constraintTop_toTopOf="@+id/rv_transaction_detail" />
 
 
         <TextView

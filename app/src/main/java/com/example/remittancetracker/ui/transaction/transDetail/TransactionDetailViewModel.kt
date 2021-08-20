@@ -13,6 +13,7 @@ import com.example.remittancetracker.repo.IRepoDataSource
 import com.example.remittancetracker.util.TYPE_TRANSACTION_SEND_MONEY
 import kotlinx.coroutines.launch
 import com.example.remittancetracker.repo.Result
+import com.example.remittancetracker.util.A_DAY_IN_LONG
 import com.example.remittancetracker.util.TYPE_TOTAL_CASH_IN
 import com.example.remittancetracker.util.USER_TYPE_ADMIN
 import com.nkr.bazaranocustomer.util.SingleLiveEvent
@@ -63,9 +64,7 @@ class TransactionDetailViewModel(val app : Application, val repo : IRepoDataSour
             is Result.Success -> {
                 val transactions = response.data
                 transactionList.value = transactions
-                if(transactions.isEmpty()){
-                    showNoData.value = true
-                }
+                showNoData.value = transactions.isEmpty()
                 Log.i("transaction_detail","transactions : ${transactions.size.toString()}")
             }
             is Result.Error -> {
@@ -148,21 +147,30 @@ class TransactionDetailViewModel(val app : Application, val repo : IRepoDataSour
 
     fun filterTransactionsByDate(user_type : String,transaction_type: String) = viewModelScope.launch {
         if (startDate.value != 0L && endDate.value != 0L) {
+
+            Log.i("isSameDay","start_date : ${startDate.value}")
+            var end_date:Long = 0
+            if(startDate.value == endDate.value){
+                end_date = endDate.value!!.plus(A_DAY_IN_LONG)
+                Log.i("isSameDay","end_date : ${end_date}")
+            }else{
+                end_date = endDate.value!!
+                Log.i("isSameDay","end_date : ${end_date}")
+            }
+
             val response = if (user_type == USER_TYPE_ADMIN) {
                 Log.i("transaction_admin", "transaction_admin ${transaction_type}")
               //  repo.getTransactionsInfoFromRemote(transaction_type)
-                repo.getFilteredTransactionsInfoByDateFromRemote(transaction_type,startDate.value!!,endDate.value!!)
+                repo.getFilteredTransactionsInfoByDateFromRemote(transaction_type,startDate.value!!,end_date)
             } else {
-                repo.getFilteredAgentTransactionsInfoByDateFromRemote(transaction_type,startDate.value!!,endDate.value!!)
+                repo.getFilteredAgentTransactionsInfoByDateFromRemote(transaction_type,startDate.value!!,end_date)
             }
 
             when (response) {
                 is Result.Success -> {
                     val transactions = response.data
                     transactionList.value = transactions
-                    if (transactions.isEmpty()) {
-                        showNoData.value = true
-                    }
+                    showNoData.value = transactions.isEmpty()
                     Log.i("filtered_trans", "transactions : ${transactions.size.toString()}")
                 }
                 is Result.Error -> {

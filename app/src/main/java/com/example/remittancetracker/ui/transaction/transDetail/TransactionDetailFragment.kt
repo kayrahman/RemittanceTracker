@@ -100,6 +100,8 @@ class TransactionDetailFragment : BaseFragment() {
                 //val date = formattedDate(datePicker.headerText)
                 viewModel.setStartDate(it)
 
+                Log.i("startDate", "$it")
+
             }
 
         }
@@ -112,6 +114,7 @@ class TransactionDetailFragment : BaseFragment() {
             datePicker.show(childFragmentManager,"to_tag")
 
             datePicker.addOnPositiveButtonClickListener {
+                Log.i("endDate", "$it")
                 binding.btnTo.text = datePicker.headerText
                // val date = formattedDate(datePicker.headerText)
                 viewModel.setEndDate(it)
@@ -157,10 +160,14 @@ class TransactionDetailFragment : BaseFragment() {
 
         viewModel.transactionList.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
-
         })
-
     }
-
-
 }
+/*
+
+1629 417600000
+
+
+1629 441751753
+
+        24151753*/

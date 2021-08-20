@@ -341,7 +341,7 @@ class RemoteDataSourceImpl(
                         .whereEqualTo("creator", getActiveUser())
                         .whereEqualTo("transaction_type", TYPE_TRANSACTION_SEND_MONEY)
                         .whereGreaterThanOrEqualTo("createdAt",start_date)
-                        .whereLessThanOrEqualTo("createdAt",end_date)
+                        .whereLessThan("createdAt",end_date)
                         .get()
                 )
 
@@ -357,7 +357,7 @@ class RemoteDataSourceImpl(
                         .whereEqualTo("creator", getActiveUser())
                         .whereEqualTo("transaction_type", TYPE_TRANSACTION_RECEIVE_MONEY)
                         .whereGreaterThanOrEqualTo("createdAt",start_date)
-                        .whereLessThanOrEqualTo("createdAt",end_date)
+                        .whereLessThan("createdAt",end_date)
                         .get()
                 )
 
